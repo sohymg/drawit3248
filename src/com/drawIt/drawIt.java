@@ -6,7 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
+//yiling here just testing
 public class drawIt extends Activity {
 	final Context myApp = this;
 	WebView webview;

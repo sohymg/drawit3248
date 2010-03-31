@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.webkit.*;
+
 //yiling here just testing
 public class drawIt extends Activity {
 	final Context myApp = this;
@@ -20,7 +20,7 @@ public class drawIt extends Activity {
 		webview.getSettings().setJavaScriptEnabled(true);
 		
 		webview.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
-		webview.loadUrl("http://www.google.com");
+		webview.loadUrl("http://www.google.com/");
 		
 	}
 	private class HelloWebViewClient extends WebViewClient {

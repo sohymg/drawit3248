@@ -33,7 +33,7 @@ public class DrawScreen extends Activity {
 	
 	//this is the squared dist, to save on square root computation
 	//change this value to set the length of each line/stroke
-	static double MIN_SQR_DIST_BET_PT = 625; 
+	static double MIN_SQR_DIST_BET_PT = 2500; 
 	
 	float startX, startY;
 	

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/drawscreen_bkg">
+
+<com.drawIt.DrawView android:layout_width="wrap_content" 
+	android:id="@+id/drawView" 
+	android:layout_height="wrap_content" 
+	android:background="@drawable/drawscreen_bkg"
+	android:layout_centerHorizontal="true">
+</com.drawIt.DrawView>
+
+<TextView android:id="@+id/TopMsg" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content" 
+	android:layout_gravity="center_horizontal" 
+	android:layout_centerHorizontal="true"
+	android:textColor="@drawable/solid_black" 
+	android:text="Draw a Pass-Stroke to save this password.">
+</TextView>
+
+<TextView android:id="@+id/BtmMsg"  
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:layout_gravity="center_horizontal" 
+	android:textColor="@drawable/solid_black" 
+	android:layout_alignParentBottom="true"
+	android:text="Shake the phone if you do not wish to save." 
+	android:layout_centerHorizontal="true">
+</TextView>
+
+</RelativeLayout>

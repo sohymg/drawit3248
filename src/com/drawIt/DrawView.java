@@ -36,38 +36,38 @@ public class DrawView extends View {
 	}
 
 	protected void onDraw(Canvas canvas) {
-		if(b != null)
-			canvas.drawBitmap(b, bitmapRect,bitmapRect,  null);
-		/*
+		/*if(b != null)
+			canvas.drawBitmap(b, bitmapRect,bitmapRect,  null);*/
+		
 		Iterator<Line> iterator = lineList.iterator();
 		while(iterator.hasNext()) {
 			Line line = iterator.next();
 			canvas.drawLine(line.startX, line.startY, line.stopX, line.stopY, paint);
-		}*/
+		}
 	}
 
 	public void addLine(float startX, float startY, float stopX, float stopY) {
-		//lineList.add(new Line(startX, startY, stopX, stopY));
+		lineList.add(new Line(startX, startY, stopX, stopY));
 
-		if(b == null) {
+		/*if(b == null) {
 			b = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
 			c = new Canvas();
 			c.setBitmap(b);
 			bitmapRect = new Rect(0,0,b.getWidth(),b.getHeight());
 		}
 		
-		c.drawLine(startX, startY, stopX, stopY, paint);
+		c.drawLine(startX, startY, stopX, stopY, paint);*/
 		
 		
 		this.invalidate();
 	}
 	
 	public void clearLines() {
-		//lineList.clear();
+		lineList.clear();
 		
-		b.recycle();
+		/*b.recycle();
 		b = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-		c.setBitmap(b);
+		c.setBitmap(b);*/
 		
 		this.invalidate();
 	}

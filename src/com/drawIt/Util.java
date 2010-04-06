@@ -50,31 +50,6 @@ public class Util {
 	}
 	
 	public static int DTWDistance(String s, String t) { //n,m
-		int n = s.length();
-		int m = t.length();
-		
-	    int[][] DTW = new int[n+1][m+1];
-	    int i, j, cost;
-
-	    for(i=1; i<=m; i++)
-	        DTW[0][i] = Integer.MAX_VALUE;
-	    for(i=1; i<=n; i++)
-	        DTW[i][0] = Integer.MAX_VALUE;
-	    DTW[0][0] = 0;
-
-	    for(i=1; i<=n; i++)
-	    	for(j=1; j<=m; j++) {
-	            cost = d(s.charAt(i-1), t.charAt(j-1));
-	            DTW[i][j] = cost + Math.min(Math.min(DTW[i-1][j  ],    // insertion
-	                                        DTW[i  ][j-1]),    // deletion
-	                                        DTW[i-1][j-1]);    // match
-	                                        
-	    	}
-
-	    return DTW[n][m];
-	}
-	
-	private static int d(char a, char b) {
 		/*
 		 *          0
 		 *       7     1
@@ -92,11 +67,60 @@ public class Util {
 				{3, 4, 3, 2, 1, 0, 1, 2}, //5
 				{2, 3, 4, 3, 2, 1, 0, 1}, //6
 				{1, 2, 3, 4, 3, 2, 1, 0}  //7
+				
+		};
+		
+		int n = s.length();
+		int m = t.length();
+		
+	    int[][] DTW = new int[n+1][m+1];
+	    int i, j, cost;
+
+	    for(i=1; i<=m; i++)
+	        DTW[0][i] = Integer.MAX_VALUE;
+	    for(i=1; i<=n; i++)
+	        DTW[i][0] = Integer.MAX_VALUE;
+	    DTW[0][0] = 0;
+
+	    for(i=1; i<=n; i++)
+	    	for(j=1; j<=m; j++) {
+	    		int x = (s.charAt(i-1) - 48);
+	    		int y = (t.charAt(j-1) - 48);
+	    		
+	    		cost = dd[x][y];
+	            
+	            DTW[i][j] = cost + Math.min(Math.min(DTW[i-1][j  ],    // insertion
+	                                        DTW[i  ][j-1]),    // deletion
+	                                        DTW[i-1][j-1]);    // match
+	                                        
+	    	}
+
+	    return DTW[n][m];
+	}
+	
+	//private static int d(char a, char b) {
+		/*
+		 *          0
+		 *       7     1
+		 *    6     *     2
+		 *      5       3
+		 *          4
+		 */
+		
+	/*	int[][] dd = {
+				{0, 1, 2, 3, 4, 3, 2, 1}, //0
+				{1, 0, 1, 2, 3, 4, 3, 2}, //1
+				{2, 1, 0, 1, 2, 3, 4, 3}, //2
+				{3, 2, 1, 0, 1, 2, 3, 4}, //3
+				{4, 3, 2, 1, 0, 1, 2, 3}, //4
+				{3, 4, 3, 2, 1, 0, 1, 2}, //5
+				{2, 3, 4, 3, 2, 1, 0, 1}, //6
+				{1, 2, 3, 4, 3, 2, 1, 0}  //7
 		};
 		
 		int i = Integer.parseInt(a + "");
 		int j = Integer.parseInt(b + "");
 		
 		return dd[i][j];
-	}
+	}*/
 }

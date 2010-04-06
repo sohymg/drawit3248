@@ -19,6 +19,9 @@ public class drawIt extends Activity {
 		
 		webview.addJavascriptInterface(new JSCallback(this), "JSCALLBACK");
 		webview.loadUrl("http://www.gmail.com/");
+		
+		//System.out.println("Lev dist: " + Util.LevenshteinDistance("saturday", "sunday"));
+		//Util.showMsg(this,Util.LevenshteinDistance("1234", "4321") +  " " + Util.DTWDistance("1234", "4321"));
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){

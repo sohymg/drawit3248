@@ -6,14 +6,97 @@ import android.content.Context;
 public class Util {
 	public static void showMsg(Context context, String msg) {
 		new AlertDialog.Builder(context)
-        .setMessage(msg)
-        .setPositiveButton(android.R.string.ok, null)
-        .setCancelable(false)
-        .create()
-        .show();
+		.setMessage(msg)
+		.setPositiveButton(android.R.string.ok, null)
+		.setCancelable(false)
+		.create()
+		.show();
 	}
-	
+
 	public static void pl(String msg) {
 		System.out.println(msg);
+	}
+
+	public static int LevenshteinDistance(String s, String t) { //m,n
+		int m = s.length();
+		int n = t.length();
+
+		// d is a table with m+1 rows and n+1 columns
+		int[][] d = new int[m+1][n+1];
+
+		for(int i=0; i<=m; i++)
+			d[i][0] = i; // deletion
+
+		for(int j=0; j<=n; j++)
+			d[0][j] = j; // insertion
+
+		for(int j=1; j<=n; j++)
+		{
+			for(int i=1; i<=m; i++)
+			{
+				if(s.charAt(i-1) == t.charAt(j-1)) 
+					d[i][j] = d[i-1][j-1];
+				else
+					d[i][j] = Math.min(Math.min
+							(
+									d[i-1][j] + 1,  // deletion
+									d[i][j-1] + 1),  // insertion
+									d[i-1][j-1] + 1 // substitution
+					);
+			}
+		}
+
+		return d[m][n];
+	}
+	
+	public static int DTWDistance(String s, String t) { //n,m
+		int n = s.length();
+		int m = t.length();
+		
+	    int[][] DTW = new int[n+1][m+1];
+	    int i, j, cost;
+
+	    for(i=1; i<=m; i++)
+	        DTW[0][i] = Integer.MAX_VALUE;
+	    for(i=1; i<=n; i++)
+	        DTW[i][0] = Integer.MAX_VALUE;
+	    DTW[0][0] = 0;
+
+	    for(i=1; i<=n; i++)
+	    	for(j=1; j<=m; j++) {
+	            cost = d(s.charAt(i-1), t.charAt(j-1));
+	            DTW[i][j] = cost + Math.min(Math.min(DTW[i-1][j  ],    // insertion
+	                                        DTW[i  ][j-1]),    // deletion
+	                                        DTW[i-1][j-1]);    // match
+	                                        
+	    	}
+
+	    return DTW[n][m];
+	}
+	
+	private static int d(char a, char b) {
+		/*
+		 *          0
+		 *       7     1
+		 *    6     *     2
+		 *      5       3
+		 *          4
+		 */
+		
+		int[][] dd = {
+				{0, 1, 2, 3, 4, 3, 2, 1}, //0
+				{1, 0, 1, 2, 3, 4, 3, 2}, //1
+				{2, 1, 0, 1, 2, 3, 4, 3}, //2
+				{3, 2, 1, 0, 1, 2, 3, 4}, //3
+				{4, 3, 2, 1, 0, 1, 2, 3}, //4
+				{3, 4, 3, 2, 1, 0, 1, 2}, //5
+				{2, 3, 4, 3, 2, 1, 0, 1}, //6
+				{1, 2, 3, 4, 3, 2, 1, 0}  //7
+		};
+		
+		int i = Integer.parseInt(a + "");
+		int j = Integer.parseInt(b + "");
+		
+		return dd[i][j];
 	}
 }

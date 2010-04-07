@@ -118,9 +118,9 @@ public class Util {
 				{1, 2, 3, 4, 3, 2, 1, 0}  //7
 		};
 		
-		int i = Integer.parseInt(a + "");
-		int j = Integer.parseInt(b + "");
+	//	int i = Integer.parseInt(a + "");
+	//	int j = Integer.parseInt(b + "");
 		
-		return dd[i][j];
+		return dd[a-48][b-48];
 	}*/
 }

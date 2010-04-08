@@ -1,47 +1,77 @@
 package com.drawIt;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class JSWebViewClient extends WebViewClient {
+	
 	public void onPageFinished(WebView webview, String url)
-    {
-		String domain = "www.gmail.com"; //todo: supposed to extract domain from url
-		
+	{
+		drawIt.activity.setTitle(url);
+		String domain = url.substring(url.indexOf(':') + 3);
+		domain = domain.substring(0, domain.indexOf('/'));
+		//Util.pl(domain);
+
 		String[] fields = DatabaseManager.hasPassStroke(domain);
+
+		if(fields != null) { //pass stroke exists, add pass stroke login			
+			try {
+				String loginJS = "";
+				InputStream is = drawIt.context.getResources().openRawResource(R.raw.loginform);
+				BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+				String str;
+			    while ((str = br.readLine()) != null) {
+			        loginJS += str;
+			    }
+			    br.close();
+			    
+			    loginJS = loginJS.replaceAll("%useridField%", fields[0]);
+				loginJS = loginJS.replaceAll("%passwdField%", fields[1]);
+				loginJS = loginJS.replaceAll("%domain%", domain);
+
+				webview.loadUrl(loginJS);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
-		if(fields != null) { //pass stroke exists, add pass stroke login
-			String js = "javascript:document.getElementsByName('%useridField%')[0].onfocus = " 
-			+ "function() { window.JSCALLBACK.showPSLogin('%domain%'); };";
-			
-			js = js.replace("%useridField%", fields[0]);
-			js = js.replace("%domain%", domain);
-			
-			webview.loadUrl(js);
+		//inject code to detect form submit
+		
+		//this line is just for convenience purpose. if not u have to keep typing the login details to test
+		//to be removed when code is ready
+		//webview.loadUrl("javascript:document.getElementsByName('Email')[0].value = 'cs3248.g4@gmail.com'; document.getElementsByName('Passwd')[0].value = 'ilovecs3248';");
+		//end
+		
+		
+		try {
+			String captureJS = "";
+			InputStream is = drawIt.context.getResources().openRawResource(R.raw.captureform);
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+			String str;
+		    while ((str = br.readLine()) != null) {
+		    	captureJS += str;
+		    }
+		    br.close();
+		    
+		    captureJS = captureJS.replaceAll("%domain%", domain);
+		    
+		    webview.loadUrl(captureJS);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		else { //pass stroke does not exist, inject code to detect form submit
-			//todo: supposed to find out the form, userid and passwd field names from each url
-			
-			String formName = "gaia_loginform";
-			String useridField = "Email";
-			String passwdField = "Passwd";
-			
-			//this line is just for convenience purpose. if not u have to keep typing the login details to test
-			//to be removed when code is ready
-			webview.loadUrl("javascript:document.getElementsByName('Email')[0].value = 'cs3248.g4@gmail.com'; document.getElementsByName('Passwd')[0].value = 'ilovecs3248';");
-			//end
-			
-			String js = "javascript:document.forms['%formName%'].onsubmit = "
-				+ "function() { window.JSCALLBACK.showPSSave('%domain%', '%formName%', "
-				+ "'%useridField%', document.getElementsByName('%useridField%')[0].value, "  
-				+ "'%passwdField%', document.getElementsByName('%passwdField%')[0].value); }";
-			
-			js = js.replace("%domain%", domain);
-			js = js.replace("%formName%", formName);
-			js = js.replaceAll("%useridField%", useridField);
-			js = js.replaceAll("%passwdField%", passwdField);
-			
-			webview.loadUrl(js);
-		}
-    }
+		//webview.loadUrl("javascript:alert('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+	}
 }

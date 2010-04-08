@@ -50,4 +50,15 @@ public class DatabaseManager {
 			return null;
 		}
 	}
+	
+	public static boolean hasPassStroke(String domain, String userid, String passwd) {
+		
+		//used by drawit to check if this set of password has already been saved. if saved, don prompt to save again
+		
+		if(DatabaseManager.domain.equals(domain) && 
+				DatabaseManager.userid.equals(userid) && DatabaseManager.passwd.equals(passwd))
+			return true;
+		else
+		return false;
+	}
 }

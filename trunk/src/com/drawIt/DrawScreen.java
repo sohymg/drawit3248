@@ -32,7 +32,7 @@ public class DrawScreen extends Activity {
 	
 	//this is the squared dist, to save on square root computation
 	//change this value to set the length of each line/stroke
-	static double MIN_SQR_DIST_BET_PT = 2500; 
+	static double MIN_SQR_DIST_BET_PT = 100; 
 	
 	float startX, startY;
 	
@@ -167,16 +167,16 @@ public class DrawScreen extends Activity {
 				}
 				break;
 			case DRAW_TO_CFM:
-				/*Util.showMsg(this, "length: " + passStroke.length() 
+				Util.showMsg(this, "length: " + passStroke.length() 
 						+ " LD: " + Util.LevenshteinDistance(passStroke, passStrokeCfm)
-						+ " DTW: " + Util.DTWDistance(passStroke, passStrokeCfm));*/
-				if(passStroke.equals(passStrokeCfm)) { //if redraw matches 1st draw, save is successful
+						+ " DTW: " + Util.DTWDistance(passStroke, passStrokeCfm));
+			/*	if(passStroke.equals(passStrokeCfm)) { //if redraw matches 1st draw, save is successful
 					setResult(RESULT_OK);
 					finish(); //return to draw_to_save
 				}
 				else {
 					Util.showMsg(this, "Your Pass-Strokes do not match.\nPlease try again.");
-				}
+				}*/
 				break;
 			case DRAW_TO_PM_SAVE:
 				break;

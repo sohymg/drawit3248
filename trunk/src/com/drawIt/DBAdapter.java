@@ -18,8 +18,11 @@ import android.util.Log;
 
 public class DBAdapter 
 {
-    public static final String KEY_ROWID = "ID";
-    public static final String KEY_USERNAME = "Username";
+    public static final String KEY_DOMAIN = "Domain";		//the first 2 fields form the primary key
+    public static final String KEY_USERID = "UserID";
+    public static final String KEY_FORMNAME = "FormName";
+    public static final String KEY_USERIDFIELD = "UserIDField";
+    public static final String KEY_PASSWDFIELD = "PasswdField";
     public static final String KEY_PASSWORD = "Password";
     public static final String KEY_PASSSTROKE = "PassStroke";    
     private static final String TAG = "DBAdapter";
@@ -29,9 +32,11 @@ public class DBAdapter
     private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_CREATE =
-        "create table PassStrokes (ID integer primary key autoincrement, "
-        + "Username text not null, Password text not null, " 
-        + "PassStroke text not null);";
+        "create table PassStrokes (Domain text not null, FormName text not null, "
+    	+ "UserIDField text not null, PasswdField text not null,"
+        + "UserID text not null, Password text not null, " 
+        + "PassStroke text not null," 
+        + "PRIMARY KEY(Domain,UserID));";
         
     private final Context context; 
     
@@ -83,28 +88,34 @@ public class DBAdapter
     }
     
     //---insert a title into the database---
-    public long insertPassStroke(String username, String password, String passStroke) 
+    public long insertPassStroke(String domain, String userID, String formName, 
+    		String userIDField, String passwdField, String password, String passStroke) 
     {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_USERNAME, username);
+        initialValues.put(KEY_DOMAIN,domain);
+        initialValues.put(KEY_USERID, userID);
+        initialValues.put(KEY_FORMNAME,formName);
+        initialValues.put(KEY_USERIDFIELD, userIDField);
+        initialValues.put(KEY_PASSWDFIELD, passwdField);
         initialValues.put(KEY_PASSWORD, password);
         initialValues.put(KEY_PASSSTROKE, passStroke);
         return db.insert(DATABASE_TABLE, null, initialValues);
     }
 
     //---deletes a particular entry based on rowID---
-    public boolean deletePassStroke(long rowId) 
+    public boolean deletePassStroke(String domain,String userID) 
     {
-        return db.delete(DATABASE_TABLE, KEY_ROWID + 
-        		"=" + rowId, null) > 0;
+        return db.delete(DATABASE_TABLE, KEY_DOMAIN + 
+        		"=" + domain + " AND " + KEY_USERID +
+        		"=" + userID, null) > 0;
     }
 
-    //---retrieves all the titles---
+    //---retrieves all the passStrokes---
     public Cursor getAllPassStrokes() 
     {
         return db.query(DATABASE_TABLE, new String[] {
-        		KEY_ROWID, 
-        		KEY_USERNAME,
+        		KEY_DOMAIN,
+        		KEY_USERID,
         		KEY_PASSWORD,
                 KEY_PASSSTROKE}, 
                 null, 
@@ -114,17 +125,13 @@ public class DBAdapter
                 null);
     }
 
-    //---retrieves a particular entry based on row ID---
-    public Cursor getPassStroke(long rowId) throws SQLException 
+    //---retrieves a particular entry based on domain and userID---
+    public Cursor getPassStroke(String domain, String userID) throws SQLException 
     {
         Cursor mCursor =
-                db.query(true, DATABASE_TABLE, new String[] {
-                		KEY_ROWID,
-                		KEY_USERNAME,
-                		KEY_PASSWORD,
-                        KEY_PASSSTROKE,
-                		}, 
-                		KEY_ROWID + "=" + rowId, 
+                db.query(true, DATABASE_TABLE, null,
+                		KEY_DOMAIN + "=" + domain + " AND "
+                		+ KEY_USERID + "=" + userID, 
                 		null,
                 		null, 
                 		null, 
@@ -137,14 +144,15 @@ public class DBAdapter
     }
 
     //---updates a passStroke---
-    public boolean updateTitle(long rowId, String username, 
+    public boolean updateTitle(String domain, String userID, 
     String password, String passStroke) 
     {
         ContentValues args = new ContentValues();
-        args.put(KEY_USERNAME, username);
+        args.put(KEY_USERID, userID);
         args.put(KEY_PASSWORD, password);
         args.put(KEY_PASSSTROKE, passStroke);
         return db.update(DATABASE_TABLE, args, 
-                         KEY_ROWID + "=" + rowId, null) > 0;
+        		KEY_DOMAIN + "=" + domain + " AND "
+        		+ KEY_USERID + "=" + userID, null) > 0;
     }
 }

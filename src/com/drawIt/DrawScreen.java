@@ -28,10 +28,10 @@ public class DrawScreen extends Activity {
 	public static final int DRAW_TO_PM_CFM 		= 4; //used for password management
 	int drawMode;
 	
-	static int MIN_PS_LENGTH = 3; //the minimum length of pass stroke
+	static int MIN_PS_LENGTH = 3; //the minimum length of pass stroke in segments
 	
 	//this is the squared dist, to save on square root computation
-	//change this value to set the length of each line/stroke
+	//change this value to set the length of each line/stroke segment
 	static double MIN_SQR_DIST_BET_PT = 100; 
 	
 	float startX, startY;

@@ -8,14 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 public class DBAdapter 
 {
     public static final String KEY_DOMAIN = "Domain";		//the first 2 fields form the primary key
@@ -32,9 +24,9 @@ public class DBAdapter
     private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_CREATE =
-        "create table PassStrokes (Domain text not null, FormName text not null, "
-    	+ "UserIDField text not null, PasswdField text not null,"
-        + "UserID text not null, Password text not null, " 
+        "create table PassStrokes (Domain text not null, UserID text not null,"
+    	+ "FormName text not null, UserIDField text not null,"
+        + "PasswdField text not null, Password text not null, " 
         + "PassStroke text not null," 
         + "PRIMARY KEY(Domain,UserID));";
         
@@ -106,8 +98,8 @@ public class DBAdapter
     public boolean deletePassStroke(String domain,String userID) 
     {
         return db.delete(DATABASE_TABLE, KEY_DOMAIN + 
-        		"=" + domain + " AND " + KEY_USERID +
-        		"=" + userID, null) > 0;
+        		"='" + domain + "' AND " + KEY_USERID +
+        		"='" + userID + "'", null) > 0;
     }
 
     //---retrieves all the passStrokes---
@@ -125,13 +117,15 @@ public class DBAdapter
                 null);
     }
 
-    //---retrieves a particular entry based on domain and userID---
-    public Cursor getPassStroke(String domain, String userID) throws SQLException 
+    //---retrieves passwordField and userIDField columns based on domain---
+    public Cursor getFields(String domain) throws SQLException 
     {
         Cursor mCursor =
-                db.query(true, DATABASE_TABLE, null,
-                		KEY_DOMAIN + "=" + domain + " AND "
-                		+ KEY_USERID + "=" + userID, 
+                db.query(true, DATABASE_TABLE, new String[] {
+                		KEY_USERIDFIELD,
+                		KEY_PASSWDFIELD
+                },
+                		KEY_DOMAIN + "='" + domain + "'", 
                 		null,
                 		null, 
                 		null, 
@@ -142,9 +136,49 @@ public class DBAdapter
         }
         return mCursor;
     }
+    
+  //---retrieves all columns based on domain and passStroke---
+    public Cursor getPassStroke(String domain, String passStroke) throws SQLException 
+    {
+        Cursor mCursor =
+                db.query(true, DATABASE_TABLE, null,
+                		KEY_DOMAIN + "='" + domain + "' AND "
+                		+ KEY_PASSSTROKE + "='" + passStroke + "'", 
+                		null,
+                		null, 
+                		null, 
+                		null, 
+                		null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
+    
+  //---checks if a given domain, userID and password have been saved---
+    public boolean checkExist(String domain, String userID, String password) throws SQLException 
+    {
+        Cursor mCursor =
+                db.query(true, DATABASE_TABLE, null,
+                		KEY_DOMAIN + "='" + domain + "' AND "
+                		+ KEY_USERID + "='" + userID + "' AND "
+                		+ KEY_PASSWORD + "='" + password + "'", 
+                		null,
+                		null, 
+                		null, 
+                		null, 
+                		null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        if(mCursor.getCount() > 0)
+        	return true;
+        else
+        	return false;
+    }
 
     //---updates a passStroke---
-    public boolean updateTitle(String domain, String userID, 
+    public boolean updatePassStroke(String domain, String userID, 
     String password, String passStroke) 
     {
         ContentValues args = new ContentValues();
@@ -152,7 +186,7 @@ public class DBAdapter
         args.put(KEY_PASSWORD, password);
         args.put(KEY_PASSSTROKE, passStroke);
         return db.update(DATABASE_TABLE, args, 
-        		KEY_DOMAIN + "=" + domain + " AND "
-        		+ KEY_USERID + "=" + userID, null) > 0;
+        		KEY_DOMAIN + "='" + domain + "' AND "
+        		+ KEY_USERID + "='" + userID + "'", null) > 0;
     }
 }

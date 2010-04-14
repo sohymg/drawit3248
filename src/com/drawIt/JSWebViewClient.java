@@ -23,7 +23,8 @@ public class JSWebViewClient extends WebViewClient {
 		domain = domain.substring(0, domain.indexOf('/'));
 		//Util.pl(domain);
 
-		String[] fields = DatabaseManager.hasPassStroke(domain);
+		String[] fields = DatabaseManager.hasPassStroke(drawIt.context,domain);
+	//	String [] fields = null;
 
 		if(fields != null) { //pass stroke exists, add pass stroke login			
 			try {

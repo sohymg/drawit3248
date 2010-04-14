@@ -13,6 +13,7 @@
 package com.drawIt;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -33,6 +34,7 @@ public class DrawScreen extends Activity {
 	//this is the squared dist, to save on square root computation
 	//change this value to set the length of each line/stroke segment
 	static double MIN_SQR_DIST_BET_PT = 100; 
+	static double ERROR_THRESHOLD = 0.15;
 	
 	float startX, startY;
 	
@@ -44,7 +46,6 @@ public class DrawScreen extends Activity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,   
@@ -142,7 +143,7 @@ public class DrawScreen extends Activity {
 		
 		switch(drawMode) {
 			case DRAW_TO_LOGIN:
-				if(DatabaseManager.getLogin(extras.getString("domain"), passStroke) != null) { //if pass stroke exist
+				if(DatabaseManager.getLogin(drawIt.context, extras.getString("domain"), passStroke) != null) { //if pass stroke exist
 					intent = new Intent();
 					intent.putExtra("domain", extras.getString("domain"));
 					intent.putExtra("passStroke", passStroke);
@@ -170,13 +171,14 @@ public class DrawScreen extends Activity {
 				Util.showMsg(this, "length: " + passStroke.length() 
 						+ " LD: " + Util.LevenshteinDistance(passStroke, passStrokeCfm)
 						+ " DTW: " + Util.DTWDistance(passStroke, passStrokeCfm));
-			/*	if(passStroke.equals(passStrokeCfm)) { //if redraw matches 1st draw, save is successful
+				 //if redraw matches 1st draw, save is successful
+				if((double)Util.DTWDistance(passStroke, passStrokeCfm)/(double)passStroke.length() < ERROR_THRESHOLD) {
 					setResult(RESULT_OK);
 					finish(); //return to draw_to_save
 				}
 				else {
 					Util.showMsg(this, "Your Pass-Strokes do not match.\nPlease try again.");
-				}*/
+				}
 				break;
 			case DRAW_TO_PM_SAVE:
 				break;

@@ -1,14 +1,15 @@
 package com.drawIt;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.Toast;
+
+import com.drawIt.*;
 
 public class drawIt extends Activity {
 
@@ -22,6 +23,9 @@ public class drawIt extends Activity {
 		context = this;
 		activity = this;
 		
+		DBAdapter dbAdapt = new DBAdapter(this);
+		dbAdapt.open();
+		dbAdapt.close();
 		getWindow().requestFeature(Window.FEATURE_PROGRESS);
 		setContentView(R.layout.main);
 		setProgressBarVisibility(true);
@@ -66,7 +70,7 @@ public class drawIt extends Activity {
 		Bundle extras = data.getExtras();
 		String domain = extras.getString("domain");
 		String passStroke = extras.getString("passStroke");
-		String[] fields = DatabaseManager.getLogin(domain, passStroke);
+		String[] fields = DatabaseManager.getLogin(context, domain, passStroke);
 		
 		//debug printout
 		//Util.pl(domain + " "+ passStroke);
@@ -99,8 +103,8 @@ public class drawIt extends Activity {
 		
 		//debug printout
 		//Util.pl(domain + " " + formName + " " + useridField + " " + userid + " " + passwdField + " " + passwd + " " + passStroke);
-		
-		DatabaseManager.addPassStroke(domain, formName, useridField, userid, passwdField, passwd, passStroke);
+		Toast.makeText(this, "trying to save", Toast.LENGTH_LONG);
+		DatabaseManager.addPassStroke(context,domain, formName, useridField, userid, passwdField, passwd, passStroke);
 	}	
 	
 	public void showPSLogin(String domain) {
@@ -120,7 +124,7 @@ public class drawIt extends Activity {
 		
 		Util.pl(formName + " " + useridField + " " + userid + " " + passwdField + " " + passwd);
 		
-		if(DatabaseManager.hasPassStroke(domain, userid, passwd) == false) {
+		if(DatabaseManager.hasPassStroke(context, domain, userid, passwd) == false) {
 			Intent intent = new Intent(this, DrawScreen.class);
 	    	intent.putExtra("mode", DrawScreen.DRAW_TO_SAVE);
 	    	intent.putExtra("domain", domain);

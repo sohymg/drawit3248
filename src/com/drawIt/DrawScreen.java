@@ -42,7 +42,7 @@ public class DrawScreen extends Activity {
 
 	String passStroke, passStrokeCfm;
 	
-	DrawView drawView;
+	DrawSView drawSView;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,7 +71,7 @@ public class DrawScreen extends Activity {
 				break;
 		}
 	
-		drawView = (DrawView)findViewById(R.id.drawView); 
+		drawSView = (DrawSView)findViewById(R.id.drawSView); 
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
@@ -117,7 +117,8 @@ public class DrawScreen extends Activity {
 			int clockValue = toClockValue(startX, startY, x, y);
 			float[] stopPts = toClockLine(startX, startY, clockValue);
 			
-			drawView.addLine(startX, startY, stopPts[0], stopPts[1]);
+			//drawView.addLine(startX, startY, stopPts[0], stopPts[1]);
+			drawSView.drawLine(startX, startY, stopPts[0], stopPts[1]);
 			
 			startX = stopPts[0];
 			startY = stopPts[1];
@@ -137,7 +138,7 @@ public class DrawScreen extends Activity {
 	}
 	
 	private void endDraw() {
-		drawView.clearLines();
+		drawSView.clearLines();
 		
 		Intent intent;
 		

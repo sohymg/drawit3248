@@ -48,10 +48,21 @@ public class drawIt extends Activity {
 		webview.getSettings().setJavaScriptEnabled(true);
 		
 		webview.addJavascriptInterface(new JSCallback(this), "JSCALLBACK");
-		webview.loadUrl("http://www.gmail.com/");
+		webview.loadUrl("http://www.hotmail.com/");
 		
 		//System.out.println("Lev dist: " + Util.LevenshteinDistance("saturday", "sunday"));
 		//Util.showMsg(this,Util.LevenshteinDistance("1234", "4321") +  " " + Util.DTWDistance("1234", "4321"));
+		
+		/*Intent intent = new Intent(this, DrawScreen.class);
+    	intent.putExtra("mode", DrawScreen.DRAW_TO_SAVE);
+    	intent.putExtra("domain", "d");
+    	intent.putExtra("formName", "formName");
+    	intent.putExtra("useridField", "useridField");
+    	intent.putExtra("userid", "userid");
+    	intent.putExtra("passwdField", "passwdField");
+    	intent.putExtra("passwd", "passwd");
+		
+		startActivityForResult(intent, DrawScreen.DRAW_TO_SAVE);*/
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -73,11 +84,12 @@ public class drawIt extends Activity {
 		String[] fields = DatabaseManager.getLogin(context, domain, passStroke);
 		
 		//debug printout
-		//Util.pl(domain + " "+ passStroke);
+		Util.pl(fields[3] + " "+ fields[4] + " " + fields[0]);
+		Util.showMsg(this, fields[3] + " "+ fields[4] + " " + fields[0]);
 		
 		String js = "javascript:document.getElementsByName('%useridField%')[0].value = "
-			+ "'%userid%'; document.getElementsByName('%passwdField%')[0].value = '%passwd%'; "
-			+ "document.forms['%formName%'].submit();";
+			+ "'%userid%'; document.getElementsByName('%passwdField%')[0].value = '%passwd%'; alert(document.getElementsByName('%passwdField%')[0].value + ' ' + document.getElementsByName('%passwdField%').length); "
+			;//+ "document.forms['%formName%'].submit();";
 		
 		js = js.replace("%useridField%", fields[1]);
 		js = js.replace("%userid%", fields[2]);
@@ -102,7 +114,7 @@ public class drawIt extends Activity {
 		String passStroke = extras.getString("passStroke");
 		
 		//debug printout
-		//Util.pl(domain + " " + formName + " " + useridField + " " + userid + " " + passwdField + " " + passwd + " " + passStroke);
+		Util.pl(domain + " " + formName + " " + useridField + " " + userid + " " + passwdField + " " + passwd + " " + passStroke);
 		Toast.makeText(this, "trying to save", Toast.LENGTH_LONG);
 		DatabaseManager.addPassStroke(context,domain, formName, useridField, userid, passwdField, passwd, passStroke);
 	}	

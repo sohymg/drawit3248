@@ -5,12 +5,12 @@
     android:layout_height="fill_parent"
     android:background="@drawable/drawscreen_bkg">
 
-<com.drawIt.DrawView android:layout_width="wrap_content" 
-	android:id="@+id/drawView" 
-	android:layout_height="wrap_content" 
-	android:background="@drawable/drawscreen_bkg"
+<com.drawIt.DrawSView android:layout_width="fill_parent" 
+	android:id="@+id/drawSView" 
+	android:layout_height="fill_parent" 
+	
 	android:layout_centerHorizontal="true">
-</com.drawIt.DrawView>
+</com.drawIt.DrawSView>
 
 <TextView android:id="@+id/TopMsg" 
 	android:layout_width="wrap_content" 

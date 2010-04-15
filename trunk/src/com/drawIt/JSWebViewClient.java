@@ -73,6 +73,19 @@ public class JSWebViewClient extends WebViewClient {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		//webview.loadUrl("javascript:alert('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+		
+		/*String js = "javascript:document.getElementsByName('%useridField%')[0].value = "
+			+ "'%userid%'; document.getElementsByName('%passwdField%')[0].value = '%passwd%'; alert(document.getElementsByName('%passwdField%')[0].value + ' ' + document.getElementsByName('%passwdField%').length); "
+			;//+ "document.forms['%formName%'].submit();";
+		
+		js = js.replace("%useridField%", "LoginTextBox");
+		js = js.replace("%userid%", "yuming1985@hotmail.com");
+		js = js.replace("%passwdField%", "PasswordTextBox");
+		js = js.replace("%passwd%", "mdmermWo09");
+		js = js.replace("%formName%", "EmailPasswordForm");
+		
+		webview.loadUrl(js);*/
 	}
 }

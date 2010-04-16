@@ -101,6 +101,12 @@ public class DBAdapter
         		"='" + domain + "' AND " + KEY_USERID +
         		"='" + userID + "'", null) > 0;
     }
+    
+    //--deletes all data saved in the database---
+    public void deleteAllPassStroke()
+    {
+    	db.delete(DATABASE_TABLE, null, null);
+    }
 
     //---retrieves all the passStrokes---
     public Cursor getAllPassStrokes() 
@@ -137,13 +143,12 @@ public class DBAdapter
         return mCursor;
     }
     
-  //---retrieves all columns based on domain and passStroke---
-    public Cursor getPassStroke(String domain, String passStroke) throws SQLException 
+  //---retrieves all columns based on domain---
+    public Cursor getPassStroke(String domain) throws SQLException 
     {
         Cursor mCursor =
                 db.query(true, DATABASE_TABLE, null,
-                		KEY_DOMAIN + "='" + domain + "' AND "
-                		+ KEY_PASSSTROKE + "='" + passStroke + "'", 
+                		KEY_DOMAIN + "='" + domain + "'", 
                 		null,
                 		null, 
                 		null, 

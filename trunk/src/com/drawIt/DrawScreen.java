@@ -34,7 +34,7 @@ public class DrawScreen extends Activity {
 	//this is the squared dist, to save on square root computation
 	//change this value to set the length of each line/stroke segment
 	static double MIN_SQR_DIST_BET_PT = 100; 
-	static double ERROR_THRESHOLD = 0.15;
+	
 	
 	float startX, startY;
 	
@@ -173,7 +173,7 @@ public class DrawScreen extends Activity {
 						+ " LD: " + Util.LevenshteinDistance(passStroke, passStrokeCfm)
 						+ " DTW: " + Util.DTWDistance(passStroke, passStrokeCfm));
 				 //if redraw matches 1st draw, save is successful
-				if((double)Util.DTWDistance(passStroke, passStrokeCfm)/(double)passStroke.length() < ERROR_THRESHOLD) {
+				if(Util.isValid(passStroke, passStrokeCfm) == true) {
 					setResult(RESULT_OK);
 					finish(); //return to draw_to_save
 				}

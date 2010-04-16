@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 
 public class Util {
+	
+	static double ERROR_THRESHOLD = 0.15;
+	
 	public static void showMsg(Context context, String msg) {
 		new AlertDialog.Builder(context)
 		.setMessage(msg)
@@ -96,6 +99,16 @@ public class Util {
 	    	}
 
 	    return DTW[n][m];
+	}
+	
+	//checks if the 2 passStrokes are an acceptable 'distance' from each other
+	public static boolean isValid(String passStroke,String passStrokeCfm)
+	{
+		double err = (double)DTWDistance(passStroke, passStrokeCfm)/(double)passStroke.length();
+		if(err <= ERROR_THRESHOLD)
+			return true;
+		else
+			return false;
 	}
 	
 	//private static int d(char a, char b) {

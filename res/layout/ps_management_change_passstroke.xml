@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ps_mgt_change_passstroke" 
+	android:layout_height="wrap_content" android:layout_width="fill_parent">
+	
+<LinearLayout 
+    android:orientation="vertical"
+    android:layout_height="fill_parent" android:layout_width="fill_parent">
+    
+<TextView 
+	android:layout_height="wrap_content" 
+	android:layout_marginTop="5px" 
+	android:layout_marginLeft="10px"
+	android:layout_marginRight="10px" 
+	android:layout_marginBottom="5px" android:id="@+id/domain_name" android:text="Domain will be displayed here." android:textStyle="bold" android:textSize="15px" android:layout_width="fill_parent">
+	</TextView>
+	
+<TextView android:layout_height="wrap_content" 
+	android:layout_marginLeft="10px" 
+	android:layout_marginRight="10px"
+	android:layout_marginBottom="5px"
+	android:id="@+id/enter_username" 
+	android:text="Username will be displayed here." android:layout_width="fill_parent" android:layout_marginTop="5px">
+	</TextView>
+	
+<TextView android:layout_height="wrap_content" 
+	android:layout_marginLeft="10px" 
+	android:layout_marginRight="10px"
+	android:layout_marginBottom="5px" android:id="@+id/enter_pwd" 
+	android:text="Enter your password here:" 
+	android:layout_marginTop="50px" android:layout_width="fill_parent">
+	</TextView>
+	
+		
+<EditText android:layout_marginBottom="5px" 
+	android:layout_marginTop="5px" 
+	android:id="@+id/password" 
+	android:text="Password will be entered here." 
+	android:layout_marginLeft="20px" 
+	android:layout_marginRight="20px" 
+	android:singleLine="true" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content">
+	</EditText>
+
+<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="50px" android:layout_marginRight="50px" android:layout_marginBottom="10px" android:layout_marginTop="10px" android:id="@+id/buttons"><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/btnBack" android:text="BACK" android:layout_marginLeft="20px" android:layout_marginRight="20px"></Button>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/btnNext" android:text="NEXT" android:layout_marginLeft="20px" android:layout_marginRight="20px"></Button>
+
+
+</TableRow>
+</LinearLayout>
+
+
+</ScrollView>

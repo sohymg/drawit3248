@@ -24,9 +24,9 @@ public class drawIt extends Activity {
 		activity = this;
 		
 		DBAdapter dbAdapt = new DBAdapter(this);
-		dbAdapt.open();
-		dbAdapt.deleteAllPassStroke();
-		dbAdapt.close();
+//		dbAdapt.open();
+//		dbAdapt.deleteAllPassStroke();
+//		dbAdapt.close();
 		
 		getWindow().requestFeature(Window.FEATURE_PROGRESS);
 		setContentView(R.layout.main);
@@ -86,11 +86,11 @@ public class drawIt extends Activity {
 		String[] fields = DatabaseManager.getLogin(context, domain, passStroke);
 		
 		//debug printout
-		Util.pl(fields[3] + " "+ fields[4] + " " + fields[0]);
-		Util.showMsg(this, fields[3] + " "+ fields[4] + " " + fields[0]);
+	//	Util.pl(fields[3] + " "+ fields[4] + " " + fields[0]);
+	//	Util.showMsg(this, fields[3] + " "+ fields[4] + " " + fields[0]);
 		
 		String js = "javascript:document.getElementsByName('%useridField%')[0].value = "
-			+ "'%userid%'; document.getElementsByName('%passwdField%')[0].value = '%passwd%'; alert(document.getElementsByName('%passwdField%')[0].value + ' ' + document.getElementsByName('%passwdField%').length); "
+			+ "'%userid%'; document.getElementsByName('%passwdField%')[0].value = '%passwd%';"// alert(document.getElementsByName('%passwdField%')[0].value + ' ' + document.getElementsByName('%passwdField%').length); "
 			;//+ "document.forms['%formName%'].submit();";
 		
 		js = js.replace("%useridField%", fields[1]);

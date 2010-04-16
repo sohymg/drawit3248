@@ -2,6 +2,7 @@ package com.drawIt;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.widget.Toast;
 
 public class Util {
 	
@@ -105,6 +106,7 @@ public class Util {
 	public static boolean isValid(String passStroke,String passStrokeCfm)
 	{
 		double err = (double)DTWDistance(passStroke, passStrokeCfm)/(double)passStroke.length();
+		
 		if(err <= ERROR_THRESHOLD)
 			return true;
 		else

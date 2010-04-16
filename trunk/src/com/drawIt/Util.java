@@ -1,7 +1,9 @@
 package com.drawIt;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Vibrator;
 import android.widget.Toast;
 
 public class Util {
@@ -113,6 +115,11 @@ public class Util {
 			return false;
 	}
 	
+	public static void vibrate(long length)
+	{
+		Vibrator v = (Vibrator) drawIt.activity.getSystemService(Context.VIBRATOR_SERVICE);    
+		v.vibrate(length);  
+	}
 	//private static int d(char a, char b) {
 		/*
 		 *          0

@@ -24,9 +24,9 @@ public class drawIt extends Activity {
 		activity = this;
 		
 		DBAdapter dbAdapt = new DBAdapter(this);
-//		dbAdapt.open();
-//		dbAdapt.deleteAllPassStroke();
-//		dbAdapt.close();
+	//	dbAdapt.open();
+	//	dbAdapt.deleteAllPassStroke();
+	//	dbAdapt.close();
 		
 		getWindow().requestFeature(Window.FEATURE_PROGRESS);
 		setContentView(R.layout.main);
@@ -72,7 +72,7 @@ public class drawIt extends Activity {
 			doLogin(data);
 		}
 		else if(requestCode == DrawScreen.DRAW_TO_SAVE && resultCode == RESULT_OK) {
-			doSave(data);			
+			doSave(data);
 		}
 	}
 	
@@ -99,6 +99,7 @@ public class drawIt extends Activity {
 		js = js.replace("%passwd%", fields[4]);
 		js = js.replace("%formName%", fields[0]);
 		
+		Toast.makeText(this, "Logging in...", Toast.LENGTH_LONG).show();
 		webview.loadUrl(js);
 	}
 	
@@ -117,7 +118,6 @@ public class drawIt extends Activity {
 		
 		//debug printout
 		Util.pl(domain + " " + formName + " " + useridField + " " + userid + " " + passwdField + " " + passwd + " " + passStroke);
-		Toast.makeText(this, "trying to save", Toast.LENGTH_LONG);
 		DatabaseManager.addPassStroke(context,domain, formName, useridField, userid, passwdField, passwd, passStroke);
 	}	
 	

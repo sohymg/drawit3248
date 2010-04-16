@@ -15,12 +15,17 @@ package com.drawIt;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class DrawScreen extends Activity {
+public class DrawScreen extends Activity implements SensorEventListener{
 
 	public static final int DRAW_TO_LOGIN 		= 0;
 	public static final int DRAW_TO_SAVE	 	= 1;
@@ -154,6 +159,7 @@ public class DrawScreen extends Activity {
 				}
 				else {
 					Util.showMsg(this, "Pass Stroke not recognized. Please try again");
+					Util.vibrate(200);
 				}
 				break;
 			case DRAW_TO_SAVE:
@@ -166,6 +172,7 @@ public class DrawScreen extends Activity {
 				}
 				else {
 					Util.showMsg(this, "Please draw a longer pass stroke");
+					Util.vibrate(150);
 				}
 				break;
 			case DRAW_TO_CFM:
@@ -173,13 +180,14 @@ public class DrawScreen extends Activity {
 						+ " LD: " + Util.LevenshteinDistance(passStroke, passStrokeCfm)
 						+ " DTW: " + Util.DTWDistance(passStroke, passStrokeCfm));
 				 //if redraw matches 1st draw, save is successful
-				if(Util.isValid(passStroke, passStrokeCfm) == true) {
+		/*		if(Util.isValid(passStroke, passStrokeCfm) == true) {
 					setResult(RESULT_OK);
 					finish(); //return to draw_to_save
 				}
 				else {
 					Util.showMsg(this, "Your Pass-Strokes do not match.\nPlease try again.");
-				}
+					Util.vibrate(200);
+				}*/
 				break;
 			case DRAW_TO_PM_SAVE:
 				break;
@@ -292,4 +300,31 @@ public class DrawScreen extends Activity {
 		
 		return stopPts;
 	}
+	
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onSensorChanged(SensorEvent event) {
+		/*
+		if(sensor == SensorManager.SENSOR_ACCELEROMETER) 
+          { 
+               double forceThreshHold = 1.5f; 
+                
+               double totalForce = 0.0f; 
+               totalForce += Math.pow(values[SensorManager.DATA_X]/SensorManager.GRAVITY_EARTH, 2.0); 
+               totalForce += Math.pow(values[SensorManager.DATA_Y]/SensorManager.GRAVITY_EARTH, 2.0); 
+               totalForce += Math.pow(values[SensorManager.DATA_Z]/SensorManager.GRAVITY_EARTH, 2.0); 
+               totalForce = Math.sqrt(totalForce); 
+                
+               if((m_gameState == STATE_RUNNING) && (totalForce < forceThreshHold) && (m_totalForcePrev > forceThreshHold)) 
+               { 
+                    doWrenchWord(); 
+               } 
+                
+               m_totalForcePrev = totalForce; 
+          }*/ 
+		
+	} 
 }

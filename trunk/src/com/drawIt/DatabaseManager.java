@@ -12,8 +12,7 @@ import android.widget.Toast;
 import com.drawIt.DBAdapter;
 
 public class DatabaseManager {
-	static String domain = "", formName = "", useridField = "", passwdField = "", userid = "", passwd = "", 
-				passStroke = "";
+	
 	public static void addPassStroke(Context ctx, String domain, String formName, String userIDField, String userID, 
 									String passwdField, String password, String passStroke) {
 		long result;
@@ -23,19 +22,12 @@ public class DatabaseManager {
 		//add a new pass stroke into the database
 		result = dbAdapt.insertPassStroke(domain, userID, formName, userIDField, passwdField, password, passStroke);
 		if(result == -1)
-			Toast.makeText(ctx,"Error saving to database",Toast.LENGTH_LONG);
+			Toast.makeText(ctx,"Error saving to database",Toast.LENGTH_LONG).show();
 		else
-			Toast.makeText(ctx,"PassStroke Saved",Toast.LENGTH_LONG);
+			Toast.makeText(ctx,"PassStroke Saved",Toast.LENGTH_LONG).show();
 		
 		dbAdapt.close();
-		/*
-		DatabaseManager.domain = domain;
-		DatabaseManager.formName = formName;
-		DatabaseManager.useridField = useridField;
-		DatabaseManager.userid = userid;
-		DatabaseManager.passwdField = passwdField;
-		DatabaseManager.passwd = passwd;
-		DatabaseManager.passStroke = passStroke;*/
+	
 	}
 	
 	public static String[] getLogin(Context ctx, String domain, String passStroke) {

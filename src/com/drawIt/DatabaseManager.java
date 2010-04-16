@@ -44,9 +44,15 @@ public class DatabaseManager {
 		//if not found, return null
 		DBAdapter dbAdapt = new DBAdapter(ctx);
 		dbAdapt.open();
-		Cursor c = dbAdapt.getPassStroke(domain,passStroke);
+		Cursor c = dbAdapt.getPassStroke(domain);
 		dbAdapt.close();
+		
 		if(c.getCount() > 0) {
+			//search for valid passStroke in domain
+			while(Util.isValid(passStroke, c.getString(5)) == false)
+			{
+				c.moveToNext();
+			}
 			//string array will contain formName, userIDField, userID, passwordField, password
 			return new String[] {c.getString(2), c.getString(3), c.getString(1), c.getString(4), c.getString(5)};
 		}

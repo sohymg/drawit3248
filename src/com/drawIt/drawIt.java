@@ -25,7 +25,9 @@ public class drawIt extends Activity {
 		
 		DBAdapter dbAdapt = new DBAdapter(this);
 		dbAdapt.open();
+		dbAdapt.deleteAllPassStroke();
 		dbAdapt.close();
+		
 		getWindow().requestFeature(Window.FEATURE_PROGRESS);
 		setContentView(R.layout.main);
 		setProgressBarVisibility(true);

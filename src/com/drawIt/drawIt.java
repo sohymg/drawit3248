@@ -50,7 +50,7 @@ public class drawIt extends Activity {
 		webview.getSettings().setJavaScriptEnabled(true);
 		
 		webview.addJavascriptInterface(new JSCallback(this), "JSCALLBACK");
-		webview.loadUrl("http://www.gmail.com/");
+		webview.loadUrl("http://www.hotmail.com/");
 		
 		//System.out.println("Lev dist: " + Util.LevenshteinDistance("saturday", "sunday"));
 		//Util.showMsg(this,Util.LevenshteinDistance("1234", "4321") +  " " + Util.DTWDistance("1234", "4321"));

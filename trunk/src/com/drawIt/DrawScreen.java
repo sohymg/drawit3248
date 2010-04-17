@@ -24,8 +24,9 @@ import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
-public class DrawScreen extends Activity implements SensorEventListener{
+public class DrawScreen extends Activity{
 
 	public static final int DRAW_TO_LOGIN 		= 0;
 	public static final int DRAW_TO_SAVE	 	= 1;
@@ -36,7 +37,7 @@ public class DrawScreen extends Activity implements SensorEventListener{
 	
 	static int MIN_PS_LENGTH = 3; //the minimum length of pass stroke in segments
 	
-	//this is the squared dist, to save on square root computation
+	//this is the squared distance, to save on square root computation
 	//change this value to set the length of each line/stroke segment
 	static double MIN_SQR_DIST_BET_PT = 100; 
 	
@@ -48,6 +49,44 @@ public class DrawScreen extends Activity implements SensorEventListener{
 	String passStroke, passStrokeCfm;
 	
 	DrawSView drawSView;
+	
+	 /* code for accelerometer to detect shakes from 
+	  * http://stackoverflow.com/questions/2317428/android-i-want-to-shake-it */
+	  private SensorManager mSensorManager;
+	  private float mAccel; // acceleration apart from gravity
+	  private float mAccelCurrent; // current acceleration including gravity
+	  private float mAccelLast; // last acceleration including gravity
+
+	  private final SensorEventListener mSensorListener = new SensorEventListener() {
+
+		    public void onSensorChanged(SensorEvent se) {
+		      float x = se.values[0];
+		      float y = se.values[1];
+		      float z = se.values[2];
+		      mAccelLast = mAccelCurrent;
+		      mAccelCurrent = (float) Math.sqrt((double) (x*x + y*y + z*z));
+		      float delta = mAccelCurrent - mAccelLast;
+		      mAccel = mAccel * 0.9f + delta; // perform low-cut filter
+		      
+		      if(mAccel > 2)
+		    	  finish();
+		    }
+
+		    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		    }
+		  };
+
+		  @Override
+		  protected void onResume() {
+		    super.onResume();
+		    mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+		  }
+
+		  @Override
+		  protected void onStop() {
+		    mSensorManager.unregisterListener(mSensorListener);
+		    super.onStop();
+		  }
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,6 +97,13 @@ public class DrawScreen extends Activity implements SensorEventListener{
 		
 		extras = getIntent().getExtras();
 		drawMode = extras.getInt("mode");
+		
+		//the next few lines are to initialise the accelerometer
+		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+	    mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+	    mAccel = 0.00f;
+	    mAccelCurrent = SensorManager.GRAVITY_EARTH;
+	    mAccelLast = SensorManager.GRAVITY_EARTH;
 		
 		switch(drawMode) {
 			case DRAW_TO_LOGIN:				
@@ -309,31 +355,4 @@ public class DrawScreen extends Activity implements SensorEventListener{
 		return stopPts;
 	}
 	
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void onSensorChanged(SensorEvent event) {
-		// TODO need to write something here to detect shakes
-		/*
-		if(sensor == SensorManager.SENSOR_ACCELEROMETER) 
-          { 
-               double forceThreshHold = 1.5f; 
-                
-               double totalForce = 0.0f; 
-               totalForce += Math.pow(values[SensorManager.DATA_X]/SensorManager.GRAVITY_EARTH, 2.0); 
-               totalForce += Math.pow(values[SensorManager.DATA_Y]/SensorManager.GRAVITY_EARTH, 2.0); 
-               totalForce += Math.pow(values[SensorManager.DATA_Z]/SensorManager.GRAVITY_EARTH, 2.0); 
-               totalForce = Math.sqrt(totalForce); 
-                
-               if((m_gameState == STATE_RUNNING) && (totalForce < forceThreshHold) && (m_totalForcePrev > forceThreshHold)) 
-               { 
-                    doWrenchWord(); 
-               } 
-                
-               m_totalForcePrev = totalForce; 
-          }*/ 
-		
-	} 
 }

@@ -174,7 +174,7 @@ public class DrawScreen extends Activity implements SensorEventListener{
 						startActivityForResult(intent, DRAW_TO_CFM); //show redraw to confirm save screen
 					}
 					else {
-						Util.showMsg(this, "I don't like this at all");
+						Util.showMsg(this, "Uniqueness Rulezz, try again!");
 						//password is not unique
 					}
 				}

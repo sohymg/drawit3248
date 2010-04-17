@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.view.View.OnTouchListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -27,6 +29,7 @@ public class drawIt extends Activity {
 	WebView webview;	
 	private EditText urlText;
 	private Button goButton;
+	private LinearLayout addressBar;
 
 	private static final int MENU_ADDRESSBAR = 0;
 	private static final int MENU_CLEARDB = 1;
@@ -69,10 +72,10 @@ public class drawIt extends Activity {
 		// Get a handle to all user interface elements
 		urlText = (EditText) findViewById(R.id.url_field);
 		goButton = (Button) findViewById(R.id.go_button);
+		addressBar = (LinearLayout)findViewById(R.id.addressBar);
 		// Setup event handlers
 		goButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-					LinearLayout addressBar = (LinearLayout)findViewById(R.id.addressBar);
 					addressBar.setVisibility(View.GONE);
 					openBrowser();
 				}
@@ -81,11 +84,19 @@ public class drawIt extends Activity {
 		urlText.setOnKeyListener(new OnKeyListener() {
 			public boolean onKey(View view, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
-						LinearLayout addressBar = (LinearLayout)findViewById(R.id.addressBar);
 						addressBar.setVisibility(View.GONE);
 						openBrowser();
 						return true;
 				}
+				return false;
+			}
+		});
+		
+		//clicking on the webview will hide the address bar
+		//false is returned so that events are still handled properly by the webview
+		webview.setOnTouchListener(new OnTouchListener() {
+			public boolean onTouch(View arg0, MotionEvent arg1) {
+				addressBar.setVisibility(View.GONE);
 				return false;
 			}
 		});
@@ -131,8 +142,10 @@ public class drawIt extends Activity {
 	    switch (item.getItemId()) {
 	    	//shows the address bar
 	    	case MENU_ADDRESSBAR:
-	    		LinearLayout addressBar = (LinearLayout)findViewById(R.id.addressBar);
 	    		addressBar.setVisibility(View.VISIBLE);
+	    		urlText.setText(webview.getUrl());
+	    		urlText.selectAll();
+	    		urlText.requestFocus();
 	    		return true;
 	    		
 	    	//deletes all passStrokes from the database
@@ -141,10 +154,12 @@ public class drawIt extends Activity {
 	    		dbAdapt.open();
 	    		dbAdapt.deleteAllPassStroke();
 	    		dbAdapt.close();
+	    		Toast.makeText(this, "Database cleared", Toast.LENGTH_LONG).show();
 	    		return true;
 	    }
 	    return false;
 	}
+	
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		if(requestCode == DrawScreen.DRAW_TO_LOGIN && resultCode == RESULT_OK) {
@@ -233,7 +248,13 @@ public class drawIt extends Activity {
 	
 	//captures back button press and use it to go back to the last visited page
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-	    if ((keyCode == KeyEvent.KEYCODE_BACK) && webview.canGoBack()) {
+		//if back button is pressed and address bar is showing, just hide the address bar
+		if(keyCode == KeyEvent.KEYCODE_BACK && addressBar.getVisibility() == View.VISIBLE) {
+			addressBar.setVisibility(View.GONE);
+			return true;
+		}
+		//or else go back to the previous page shown
+		else if ((keyCode == KeyEvent.KEYCODE_BACK) && webview.canGoBack()) {
 	        webview.goBack();
 	        return true;
 	    }

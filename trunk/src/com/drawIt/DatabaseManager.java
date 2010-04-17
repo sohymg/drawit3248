@@ -86,4 +86,34 @@ public class DatabaseManager {
 		else
 			return false;
 	}
+
+	//checks if a passStroke is too close to an existing one
+	public static boolean isUnique(Context ctx, String domain, String passStroke)
+	{
+		DBAdapter dbAdapt = new DBAdapter(ctx);
+		dbAdapt.open();
+		//get all passStrokes in that domain
+		Cursor c = dbAdapt.getPassStroke(domain);
+		dbAdapt.close();
+		
+		//use twice the error threshold to make sure the new one is different enough
+		double errThreshold = Util.ERROR_THRESHOLD * 2;
+		double err;
+		String existing;
+		if(c.getCount() > 0)
+		{
+			do
+			{
+				existing = c.getString(6);
+				err = (double)Util.DTWDistance(passStroke, existing)/(double)existing.length();
+				//passStroke is too close to an existing one
+				if(err <= errThreshold)
+					return false;
+			
+			}while (c.moveToNext()== true);
+			
+		}
+		//no match found
+		return true;
+	}
 }

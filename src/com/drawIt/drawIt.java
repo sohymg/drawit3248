@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -26,6 +28,8 @@ public class drawIt extends Activity {
 	private EditText urlText;
 	private Button goButton;
 
+	private static final int MENU_ADDRESSBAR = 0;
+	private static final int MENU_CLEARDB = 1;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,8 +65,6 @@ public class drawIt extends Activity {
 		
 		webview.addJavascriptInterface(new JSCallback(this), "JSCALLBACK");
 		webview.loadUrl("http://www.hotmail.com/");
-		//webview.requestFocus(View.FOCUS_DOWN);
-		webview.requestFocusFromTouch();
 		
 		// Get a handle to all user interface elements
 		urlText = (EditText) findViewById(R.id.url_field);
@@ -108,13 +110,41 @@ public class drawIt extends Activity {
 	private void openBrowser() {
 		webview.getSettings().setJavaScriptEnabled(true);
 		String url = urlText.getText().toString();
-		if(url.contains("http://") == false || url.endsWith("/")==false) {
-			url = "http://" + url + "/";
+		if(url.contains("http://") == false) {
+			url = "http://" + url;
 		}
+		if(url.endsWith("/")==false)
+			url += "/";
 		urlText.setText(url);
 		webview.loadUrl(url);
 	}
 
+	/* Creates the menu items */
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    menu.add(0, MENU_ADDRESSBAR, 0, "Go");
+	    menu.add(0, MENU_CLEARDB, 0, "Clear All PassStrokes");
+	    return true;
+	}
+
+	/* Handles item selections */
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	    	//shows the address bar
+	    	case MENU_ADDRESSBAR:
+	    		LinearLayout addressBar = (LinearLayout)findViewById(R.id.addressBar);
+	    		addressBar.setVisibility(View.VISIBLE);
+	    		return true;
+	    		
+	    	//deletes all passStrokes from the database
+	    	case MENU_CLEARDB:
+	    		DBAdapter dbAdapt = new DBAdapter(this);
+	    		dbAdapt.open();
+	    		dbAdapt.deleteAllPassStroke();
+	    		dbAdapt.close();
+	    		return true;
+	    }
+	    return false;
+	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		if(requestCode == DrawScreen.DRAW_TO_LOGIN && resultCode == RESULT_OK) {

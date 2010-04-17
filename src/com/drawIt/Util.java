@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 public class Util {
 	
-	static double ERROR_THRESHOLD = 0.15;
+	static double ERROR_THRESHOLD = 0.19;
 	
 	public static void showMsg(Context context, String msg) {
 		new AlertDialog.Builder(context)

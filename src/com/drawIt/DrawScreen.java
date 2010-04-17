@@ -164,11 +164,19 @@ public class DrawScreen extends Activity implements SensorEventListener{
 				break;
 			case DRAW_TO_SAVE:
 				if(passStroke.length() >= MIN_PS_LENGTH) { //if pass stroke is of min. length
-					intent = new Intent(this, DrawScreen.class);
-					intent.putExtra("mode", DRAW_TO_CFM);
-					intent.putExtra("passStroke", passStroke);
+					//now check if passStroke is unique
+					if(DatabaseManager.isUnique(drawIt.context, extras.getString("domain"), passStroke)) {
 					
-					startActivityForResult(intent, DRAW_TO_CFM); //show redraw to confirm save screen
+						intent = new Intent(this, DrawScreen.class);
+						intent.putExtra("mode", DRAW_TO_CFM);
+						intent.putExtra("passStroke", passStroke);
+					
+						startActivityForResult(intent, DRAW_TO_CFM); //show redraw to confirm save screen
+					}
+					else {
+						Util.showMsg(this, "I don't like this at all");
+						//password is not unique
+					}
 				}
 				else {
 					Util.showMsg(this, "Please draw a longer pass stroke");
@@ -176,18 +184,18 @@ public class DrawScreen extends Activity implements SensorEventListener{
 				}
 				break;
 			case DRAW_TO_CFM:
-				Util.showMsg(this, "length: " + passStroke.length() 
+				/*Util.showMsg(this, "length: " + passStroke.length() 
 						+ " LD: " + Util.LevenshteinDistance(passStroke, passStrokeCfm)
-						+ " DTW: " + Util.DTWDistance(passStroke, passStrokeCfm));
+						+ " DTW: " + Util.DTWDistance(passStroke, passStrokeCfm));*/
 				 //if redraw matches 1st draw, save is successful
-		/*		if(Util.isValid(passStroke, passStrokeCfm) == true) {
+				if(Util.isValid(passStroke, passStrokeCfm) == true) {
 					setResult(RESULT_OK);
 					finish(); //return to draw_to_save
 				}
 				else {
 					Util.showMsg(this, "Your Pass-Strokes do not match.\nPlease try again.");
 					Util.vibrate(200);
-				}*/
+				}
 				break;
 			case DRAW_TO_PM_SAVE:
 				break;
@@ -307,6 +315,7 @@ public class DrawScreen extends Activity implements SensorEventListener{
 	}
 
 	public void onSensorChanged(SensorEvent event) {
+		// TODO need to write something here to detect shakes
 		/*
 		if(sensor == SensorManager.SENSOR_ACCELEROMETER) 
           { 

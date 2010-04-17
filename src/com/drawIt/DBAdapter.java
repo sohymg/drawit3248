@@ -143,7 +143,7 @@ public class DBAdapter
         return mCursor;
     }
     
-  //---retrieves all columns based on domain---
+  //---retrieves all fields based on domain---
     public Cursor getPassStroke(String domain) throws SQLException 
     {
         Cursor mCursor =

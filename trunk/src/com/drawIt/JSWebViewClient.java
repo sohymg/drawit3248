@@ -21,7 +21,7 @@ public class JSWebViewClient extends WebViewClient {
 		drawIt.activity.setTitle(url);
 		String domain = url.substring(url.indexOf(':') + 3);
 		domain = domain.substring(0, domain.indexOf('/'));
-		//Util.pl(domain);
+	//	Util.pl(domain);
 
 		String[] fields = DatabaseManager.hasPassStroke(drawIt.context,domain);
 	//	String [] fields = null;

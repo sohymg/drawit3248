@@ -13,6 +13,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.drawIt.*;
@@ -60,6 +61,8 @@ public class drawIt extends Activity {
 		
 		webview.addJavascriptInterface(new JSCallback(this), "JSCALLBACK");
 		webview.loadUrl("http://www.hotmail.com/");
+		//webview.requestFocus(View.FOCUS_DOWN);
+		webview.requestFocusFromTouch();
 		
 		// Get a handle to all user interface elements
 		urlText = (EditText) findViewById(R.id.url_field);
@@ -67,6 +70,8 @@ public class drawIt extends Activity {
 		// Setup event handlers
 		goButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
+					LinearLayout addressBar = (LinearLayout)findViewById(R.id.addressBar);
+					addressBar.setVisibility(View.GONE);
 					openBrowser();
 				}
 		});
@@ -74,6 +79,8 @@ public class drawIt extends Activity {
 		urlText.setOnKeyListener(new OnKeyListener() {
 			public boolean onKey(View view, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
+						LinearLayout addressBar = (LinearLayout)findViewById(R.id.addressBar);
+						addressBar.setVisibility(View.GONE);
 						openBrowser();
 						return true;
 				}
@@ -101,7 +108,7 @@ public class drawIt extends Activity {
 	private void openBrowser() {
 		webview.getSettings().setJavaScriptEnabled(true);
 		String url = urlText.getText().toString();
-		if(url.contains("http://") == false) {
+		if(url.contains("http://") == false || url.endsWith("/")==false) {
 			url = "http://" + url + "/";
 		}
 		urlText.setText(url);

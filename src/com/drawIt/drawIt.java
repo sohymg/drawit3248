@@ -4,9 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
 import android.view.Window;
+import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.drawIt.*;
@@ -16,6 +22,9 @@ public class drawIt extends Activity {
 	static Context context;
 	static Activity activity;
 	WebView webview;	
+	private EditText urlText;
+	private Button goButton;
+
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,6 +61,27 @@ public class drawIt extends Activity {
 		webview.addJavascriptInterface(new JSCallback(this), "JSCALLBACK");
 		webview.loadUrl("http://www.hotmail.com/");
 		
+		// Get a handle to all user interface elements
+		urlText = (EditText) findViewById(R.id.url_field);
+		goButton = (Button) findViewById(R.id.go_button);
+		// Setup event handlers
+		goButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+					openBrowser();
+				}
+		});
+		
+		urlText.setOnKeyListener(new OnKeyListener() {
+			public boolean onKey(View view, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_ENTER) {
+						openBrowser();
+						return true;
+				}
+				return false;
+			}
+		});
+
+
 		//System.out.println("Lev dist: " + Util.LevenshteinDistance("saturday", "sunday"));
 		//Util.showMsg(this,Util.LevenshteinDistance("1234", "4321") +  " " + Util.DTWDistance("1234", "4321"));
 		
@@ -66,6 +96,18 @@ public class drawIt extends Activity {
 		
 		startActivityForResult(intent, DrawScreen.DRAW_TO_SAVE);*/
 	}
+	
+	/** Open a browser on the URL specified in the text box */
+	private void openBrowser() {
+		webview.getSettings().setJavaScriptEnabled(true);
+		String url = urlText.getText().toString();
+		if(url.contains("http://") == false) {
+			url = "http://" + url + "/";
+		}
+		urlText.setText(url);
+		webview.loadUrl(url);
+	}
+
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		if(requestCode == DrawScreen.DRAW_TO_LOGIN && resultCode == RESULT_OK) {
@@ -99,7 +141,7 @@ public class drawIt extends Activity {
 		js = js.replace("%passwd%", fields[4]);
 		js = js.replace("%formName%", fields[0]);
 		
-		Toast.makeText(this, "Logging in...", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, "Login details entered", Toast.LENGTH_LONG).show();
 		webview.loadUrl(js);
 	}
 	
@@ -150,5 +192,14 @@ public class drawIt extends Activity {
 			
 			startActivityForResult(intent, DrawScreen.DRAW_TO_SAVE);
 		}
+	}
+	
+	//captures back button press and use it to go back to the last visited page
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if ((keyCode == KeyEvent.KEYCODE_BACK) && webview.canGoBack()) {
+	        webview.goBack();
+	        return true;
+	    }
+	    return super.onKeyDown(keyCode, event);
 	}
 }

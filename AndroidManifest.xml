@@ -12,7 +12,13 @@
             </intent-filter>
         </activity>
 		<activity android:name="DrawScreen"></activity>
-    </application>
+    
+<activity android:name="SelectDomain"></activity>
+<activity android:name="EnterUsername"></activity>
+<activity android:name="SelectOption"></activity>
+<activity android:name="ChangePassword"></activity>
+<activity android:name="ChangePassStroke"></activity>
+</application>
 
 
 

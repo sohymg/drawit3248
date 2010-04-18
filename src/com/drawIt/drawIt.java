@@ -32,7 +32,8 @@ public class drawIt extends Activity {
 	private LinearLayout addressBar;
 
 	private static final int MENU_ADDRESSBAR = 0;
-	private static final int MENU_CLEARDB = 1;
+	private static final int MENU_PSMANAGEMENT = 1;
+	private static final int MENU_CLEARDB = 2;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -133,6 +134,7 @@ public class drawIt extends Activity {
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    menu.add(0, MENU_ADDRESSBAR, 0, "Go");
+	    menu.add(0, MENU_PSMANAGEMENT, 0, "PassStroke Management");
 	    menu.add(0, MENU_CLEARDB, 0, "Clear All PassStrokes");
 	    return true;
 	}
@@ -146,6 +148,11 @@ public class drawIt extends Activity {
 	    		urlText.setText(webview.getUrl());
 	    		urlText.selectAll();
 	    		urlText.requestFocus();
+	    		return true;
+	    		
+	    	case MENU_PSMANAGEMENT:
+	    		Intent newScreen = new Intent(this,PSManagement.class);
+	    		startActivityForResult(newScreen,0);
 	    		return true;
 	    		
 	    	//deletes all passStrokes from the database

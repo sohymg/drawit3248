@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+	
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ps_mgt_correct_username" 
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+<TextView 
+	android:layout_height="wrap_content" 
+	android:layout_marginTop="5px" 
+	android:layout_marginLeft="10px"
+	android:layout_marginRight="10px" 
+	android:layout_marginBottom="5px" android:text="Domain will be displayed here." android:textStyle="bold" android:textSize="15px" android:layout_width="fill_parent" android:id="@+id/tvDomain">
+	</TextView>
+	
+<TextView android:layout_height="wrap_content" 
+	android:layout_marginLeft="10px" 
+	android:layout_marginRight="10px"
+	android:layout_marginBottom="5px" android:textStyle="normal" android:layout_marginTop="5px" android:text="Username will be displayer here." android:layout_width="fill_parent" android:id="@+id/tvUsername">
+	</TextView>
+	
+<ListView android:layout_width="fill_parent" 
+	android:layout_height="fill_parent" 
+	android:layout_marginTop="5px" 
+	android:layout_marginLeft="10px" 
+	android:layout_marginRight="10px" 
+	android:layout_marginBottom="5px" android:clickable="true" android:choiceMode="singleChoice" android:id="@+id/lvOptions">
+	</ListView>
+	
+
+</LinearLayout>

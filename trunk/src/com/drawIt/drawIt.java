@@ -20,9 +20,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.drawIt.*;
 
-public class drawIt extends Activity {
+public class drawIt extends Activity{
 
 	static Context context;
 	static Activity activity;
@@ -33,7 +32,7 @@ public class drawIt extends Activity {
 
 	private static final int MENU_ADDRESSBAR = 0;
 	private static final int MENU_PSMANAGEMENT = 1;
-	private static final int MENU_CLEARDB = 2;
+	
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,10 +40,6 @@ public class drawIt extends Activity {
 		context = this;
 		activity = this;
 		
-		DBAdapter dbAdapt = new DBAdapter(this);
-	//	dbAdapt.open();
-	//	dbAdapt.deleteAllPassStroke();
-	//	dbAdapt.close();
 		
 		getWindow().requestFeature(Window.FEATURE_PROGRESS);
 		setContentView(R.layout.main);
@@ -133,9 +128,8 @@ public class drawIt extends Activity {
 
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    menu.add(0, MENU_ADDRESSBAR, 0, "Go");
+	    menu.add(0, MENU_ADDRESSBAR, 0, "Go To Address");
 	    menu.add(0, MENU_PSMANAGEMENT, 0, "PassStroke Management");
-	    menu.add(0, MENU_CLEARDB, 0, "Clear All PassStrokes");
 	    return true;
 	}
 
@@ -151,17 +145,8 @@ public class drawIt extends Activity {
 	    		return true;
 	    		
 	    	case MENU_PSMANAGEMENT:
-	    		Intent newScreen = new Intent(this,PSManagement.class);
-	    		startActivityForResult(newScreen,0);
-	    		return true;
-	    		
-	    	//deletes all passStrokes from the database
-	    	case MENU_CLEARDB:
-	    		DBAdapter dbAdapt = new DBAdapter(this);
-	    		dbAdapt.open();
-	    		dbAdapt.deleteAllPassStroke();
-	    		dbAdapt.close();
-	    		Toast.makeText(this, "Database cleared", Toast.LENGTH_LONG).show();
+	    		Intent newScreen = new Intent (this, SelectDomain.class);
+	    		startActivity(newScreen);
 	    		return true;
 	    }
 	    return false;
@@ -267,4 +252,5 @@ public class drawIt extends Activity {
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}
+
 }

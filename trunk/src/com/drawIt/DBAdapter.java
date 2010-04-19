@@ -194,4 +194,14 @@ public class DBAdapter
         		KEY_DOMAIN + "='" + domain + "' AND "
         		+ KEY_USERID + "='" + userID + "'", null) > 0;
     }
+    
+    public Cursor getDomains()
+    {
+    	Cursor mCursor = db.query(true, DATABASE_TABLE, new String[]{"domain"},
+    			null, null, null, null, null, null);
+    	if(mCursor.getCount()>0)
+    		return mCursor;
+    	else
+    		return null;
+    }
 }

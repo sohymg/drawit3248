@@ -87,6 +87,20 @@ public class DatabaseManager {
 			return false;
 	}
 
+	public static String[] getDomains(Context ctx) {
+		DBAdapter dbAdapt = new DBAdapter(ctx);
+		dbAdapt.open();
+		Cursor mCursor = dbAdapt.getDomains();
+		dbAdapt.close();
+		int numDomains = mCursor.getCount();
+		String [] domains = new String[numDomains];
+		
+		for(int i=0;i<numDomains;i++)
+		{
+			domains[i] = mCursor.getString(0);
+		}
+		return domains;
+	}
 	//checks if a passStroke is too close to an existing one
 	public static boolean isUnique(Context ctx, String domain, String passStroke)
 	{

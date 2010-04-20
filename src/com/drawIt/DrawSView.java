@@ -67,7 +67,7 @@ public class DrawSView extends SurfaceView implements SurfaceHolder.Callback {
 		//draw on canvas one
         try {
             canvas = surfaceHolder.lockCanvas(null);
-            canvas.drawLine(startX, startY, stopX, stopY, paint);
+       //     canvas.drawLine(startX, startY, stopX, stopY, paint);
         } finally {
             if (canvas != null) {
                 surfaceHolder.unlockCanvasAndPost(canvas);
@@ -78,7 +78,7 @@ public class DrawSView extends SurfaceView implements SurfaceHolder.Callback {
       //draw on canvas two
         try {
             canvas = surfaceHolder.lockCanvas(null);
-            canvas.drawLine(startX, startY, stopX, stopY, paint); 
+         //   canvas.drawLine(startX, startY, stopX, stopY, paint); 
         } finally {
         	if (canvas != null) {
                 surfaceHolder.unlockCanvasAndPost(canvas);

@@ -1,11 +1,11 @@
-javascript:var formList = document.getElementsByTagName('form');
+javascript:var ps_formList = document.getElementsByTagName('form');
 
-for(var j=0; j<formList.length; j++) {
+for(var ps_j=0; ps_j<ps_formList.length; ps_j++) {
 
-	var inputList = formList[j].getElementsByTagName('input');
+	var inputList = ps_formList[ps_j].getElementsByTagName('input');
 	
-	for(var k=0; k<inputList.length; k++) {
-		var input = inputList[k];
+	for(var ps_k=0; ps_k<inputList.length; ps_k++) {
+		var input = inputList[ps_k];
 		var type = input.attributes.getNamedItem('type'); 
 
 		if(type != null && type.value == 'password') {
@@ -50,7 +50,7 @@ for(var j=0; j<formList.length; j++) {
 
 				if(formName != null && useridField != null && passwdField != null && useridValue != '' && passwdValue != '') {
 					
-					window.JSCALLBACK.showPSSave('%domain%', formName, useridField, useridValue, passwdField, passwdValue);
+					window.PSJSCALLBACK.showPSSave('%domain%', formName, useridField, useridValue, passwdField, passwdValue);
 				}
 			}
 		}

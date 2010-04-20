@@ -17,6 +17,7 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -37,7 +38,7 @@ public class DrawScreen extends Activity{
 	public static final int DRAW_TO_PM_CFM 		= 4; //used for password management
 	int drawMode;
 	
-	static int MIN_PS_LENGTH = 3; //the minimum length of pass stroke in segments
+	static int MIN_PS_LENGTH = 50; //the minimum length of pass stroke in segments
 	
 	//this is the squared distance, to save on square root computation
 	//change this value to set the length of each line/stroke segment
@@ -94,6 +95,8 @@ public class DrawScreen extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,   
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -118,6 +121,7 @@ public class DrawScreen extends Activity{
 			case DRAW_TO_CFM:
 				passStroke = extras.getString("passStroke");
 				setContentView(R.layout.draw_to_cfm);
+				
 				break;
 			case DRAW_TO_PM_SAVE:
 				break;
@@ -126,6 +130,13 @@ public class DrawScreen extends Activity{
 		}
 	
 		drawSView = (DrawSView)findViewById(R.id.drawSView); 
+		
+		
+	}
+	
+	public void onStart() {
+		super.onStart();
+		if(drawMode == DRAW_TO_CFM) Toast.makeText(drawIt.context, "Re-draw your pass stroke to confirm", Toast.LENGTH_LONG).show();
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {

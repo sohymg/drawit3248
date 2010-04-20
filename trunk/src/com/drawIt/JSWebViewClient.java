@@ -24,7 +24,6 @@ public class JSWebViewClient extends WebViewClient {
 	//	Util.pl(domain);
 
 		String[] fields = DatabaseManager.hasPassStroke(drawIt.context,domain);
-	//	String [] fields = null;
 
 		if(fields != null) { //pass stroke exists, add pass stroke login			
 			try {
@@ -41,8 +40,11 @@ public class JSWebViewClient extends WebViewClient {
 			    loginJS = loginJS.replaceAll("%useridField%", fields[0]);
 				loginJS = loginJS.replaceAll("%passwdField%", fields[1]);
 				loginJS = loginJS.replaceAll("%domain%", domain);
-
+				//Util.pl(loginJS);
+				
 				webview.loadUrl(loginJS);
+				
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -68,8 +70,10 @@ public class JSWebViewClient extends WebViewClient {
 		    br.close();
 		    
 		    captureJS = captureJS.replaceAll("%domain%", domain);
+		    //Util.pl(captureJS);
 		    
 		    webview.loadUrl(captureJS);
+		   
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

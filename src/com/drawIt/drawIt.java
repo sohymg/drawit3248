@@ -12,6 +12,7 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.KeyEvent;
@@ -53,6 +54,7 @@ public class drawIt extends Activity{
 		context = this;
 		activity = this;
 		
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
 		getWindow().requestFeature(Window.FEATURE_PROGRESS);
 		setContentView(R.layout.main);

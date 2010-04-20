@@ -87,19 +87,20 @@ public class DatabaseManager {
 			return false;
 	}
 
+	//gets all the domains in the database and returns them in a string array
 	public static String[] getDomains(Context ctx) {
 		DBAdapter dbAdapt = new DBAdapter(ctx);
 		dbAdapt.open();
 		Cursor mCursor = dbAdapt.getDomains();
 		dbAdapt.close();
 		int numDomains = 0;
-		if(mCursor != null)
-			numDomains = mCursor.getCount();
+		numDomains = mCursor.getCount();
 		String [] domains = new String[numDomains];
 		
 		for(int i=0;i<numDomains;i++)
 		{
 			domains[i] = mCursor.getString(0);
+			mCursor.moveToNext();
 		}
 		return domains;
 	}

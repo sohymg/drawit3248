@@ -195,13 +195,13 @@ public class DBAdapter
         		+ KEY_USERID + "='" + userID + "'", null) > 0;
     }
     
+    //returns a cursor to a table with all the domains in the database
     public Cursor getDomains()
     {
     	Cursor mCursor = db.query(true, DATABASE_TABLE, new String[]{"domain"},
     			null, null, null, null, null, null);
-    	if(mCursor.getCount()>0)
-    		return mCursor;
-    	else
-    		return null;
+    	
+    	mCursor.moveToFirst();
+    	return mCursor;
     }
 }

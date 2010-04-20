@@ -92,7 +92,9 @@ public class DatabaseManager {
 		dbAdapt.open();
 		Cursor mCursor = dbAdapt.getDomains();
 		dbAdapt.close();
-		int numDomains = mCursor.getCount();
+		int numDomains = 0;
+		if(mCursor != null)
+			numDomains = mCursor.getCount();
 		String [] domains = new String[numDomains];
 		
 		for(int i=0;i<numDomains;i++)

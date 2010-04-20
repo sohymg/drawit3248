@@ -27,7 +27,6 @@
 		
 <EditText android:layout_marginBottom="5px" 
 	android:layout_marginTop="5px" 
-	android:text="Username will be entered here." 
 	android:layout_marginLeft="20px" 
 	android:layout_marginRight="20px" 
 	android:singleLine="true" 
@@ -49,8 +48,22 @@
 	android:layout_marginTop="10px" 
 	android:layout_marginLeft="20px" 
 	android:layout_marginRight="20px" 
-	android:layout_marginBottom="10px"><Button android:layout_height="wrap_content" android:id="@+id/btnBack" android:text="BACK" android:layout_width="wrap_content" android:layout_marginLeft="20px" android:layout_marginRight="50px"></Button>
-<Button android:layout_height="wrap_content" android:id="@+id/btnNext" android:text="NEXT" android:layout_width="wrap_content" android:layout_marginRight="20px" android:layout_marginLeft="50px"></Button>
+	android:layout_marginBottom="10px">
+	
+<Button android:layout_height="50px" 
+		android:id="@+id/btnBack" 
+		android:text="BACK" 
+		android:layout_width="100px" 
+		android:layout_marginLeft="0px" 
+		android:layout_marginRight="0px">
+		</Button>
+<Button android:layout_height="50px" 
+		android:id="@+id/btnNext" 
+		android:text="NEXT" 
+		android:layout_width="100px" 
+		android:layout_marginRight="0px" 
+		android:layout_marginLeft="0px">
+		</Button>
 
 </TableRow>
 

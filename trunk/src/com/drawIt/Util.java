@@ -1,14 +1,15 @@
 package com.drawIt;
 
-import android.app.Activity;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Vibrator;
-import android.widget.Toast;
+
 
 public class Util {
 	
 	static double ERROR_THRESHOLD = 0.19;
+	static final String LOG_FILE = "drawItLog";
 	
 	public static void showMsg(Context context, String msg) {
 		new AlertDialog.Builder(context)

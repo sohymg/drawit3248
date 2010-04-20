@@ -58,7 +58,7 @@ public class DrawScreen extends Activity{
 	  private float mAccel; // acceleration apart from gravity
 	  private float mAccelCurrent; // current acceleration including gravity
 	  private float mAccelLast; // last acceleration including gravity
-	  private static float ACCEL_THRESHOLD = 5;
+	  private static float ACCEL_THRESHOLD = 3;
 
 	  private final SensorEventListener mSensorListener = new SensorEventListener() {
 
@@ -71,7 +71,7 @@ public class DrawScreen extends Activity{
 		      float delta = mAccelCurrent - mAccelLast;
 		      mAccel = mAccel * 0.9f + delta; // perform low-cut filter
 		      
-		      if(mAccel > ACCEL_THRESHOLD);
+		      if(mAccel > ACCEL_THRESHOLD)
 		    	  finish();
 		    }
 
@@ -82,7 +82,7 @@ public class DrawScreen extends Activity{
 		  @Override
 		  protected void onResume() {
 		    super.onResume();
-		    mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+	//	    mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 		  }
 
 		  @Override
@@ -103,7 +103,7 @@ public class DrawScreen extends Activity{
 		
 		//the next few lines are to initialise the accelerometer
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-	    mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+	//    mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 	    mAccel = 0.00f;
 	    mAccelCurrent = SensorManager.GRAVITY_EARTH;
 	    mAccelLast = SensorManager.GRAVITY_EARTH;

@@ -39,18 +39,34 @@ public class DatabaseManager {
 		Cursor c = dbAdapt.getPassStroke(domain);
 		dbAdapt.close();
 		
+		Util.readLogFile();
+		String logStr = Util.getDayTime() + "\t";
 		if(c.getCount() > 0) {
 			//search for valid passStroke in domain
 			while(Util.isValid(passStroke, c.getString(6)) == false)
 			{
 				if(c.moveToNext() == false)
+				{
+					//no matching passStroke is found
+					c.moveToPrevious();
+					logStr += String.valueOf(Util.DTWDistance(passStroke, c.getString(6)));
+					logStr += "\t" + String.valueOf(passStroke.length());
+					Util.log.add(logStr);
 					return null;
+				}
 			}
 			String formName = c.getString(2);
 			String userIDField = c.getString(3);
 			String userID = c.getString(1);
 			String passwordField = c.getString(4);
 			String password = c.getString(5);
+			
+			
+			logStr += String.valueOf(Util.DTWDistance(passStroke, c.getString(6)));
+			logStr += "\t" + String.valueOf(passStroke.length());
+			Util.log.add(logStr);
+			Util.writeLogFile();
+			
 			c.close();
 			//string array will contain formName, userIDField, userID, passwordField, password
 			return new String[] {formName,userIDField,userID,passwordField,password};

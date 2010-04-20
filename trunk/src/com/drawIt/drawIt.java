@@ -1,20 +1,11 @@
 package com.drawIt;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Calendar;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,8 +36,6 @@ public class drawIt extends Activity{
 	private static final int MENU_PSMANAGEMENT = 1;
 	private static final String HOMEPAGE = "http://www.gmail.com/";
 	
-	ArrayList<String> log = new ArrayList<String>();
-	private long startTime;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -135,7 +124,7 @@ public class drawIt extends Activity{
 	private void openBrowser() {
 		webview.getSettings().setJavaScriptEnabled(true);
 		String url = urlText.getText().toString();
-		if(url.contains("http://") == false) {
+		if(url.contains("://") == false) {
 			url = "http://" + url;
 		}
 		if(url.endsWith("/")==false)
@@ -252,9 +241,6 @@ public class drawIt extends Activity{
 	    	intent.putExtra("passwdField", passwdField);
 	    	intent.putExtra("passwd", passwd);
 	    	
-	    	long timeTaken = Calendar.getInstance().getTimeInMillis() - startTime;
-	    	log.add(String.valueOf(timeTaken));
-			
 			startActivityForResult(intent, DrawScreen.DRAW_TO_SAVE);
 		}
 	}
@@ -274,65 +260,6 @@ public class drawIt extends Activity{
 	    return super.onKeyDown(keyCode, event);
 	}
 	
-	/** Method used to load the log file from the HTC Magic's microSD card
-	*/
-	public void readLogFile() {
-		try {
-			log.clear();
-			File f = new File(Environment.getExternalStorageDirectory() + "/" + Util.LOG_FILE);
-			FileInputStream fileIS = new FileInputStream(f);
-			BufferedReader buf = new BufferedReader(new InputStreamReader(fileIS));
-			String readString = new String();
-			
-			//just reading each line and pass it on the debugger
-			while((readString = buf.readLine())!= null) {
-				log.add(readString.trim());
-			}
-			
-		}
-		
-		catch(Exception e) {
-			log.clear();
-			log.add("Log file first created on " + getDayTime() + "\n");
-			writeLogFile();
-			readLogFile();
-		}
-		
-	}
 	
-	/** Method used to write the log file to the HTC Magic's microSD card
-	*/
-	public void writeLogFile() {
-		try {
-			File root = Environment.getExternalStorageDirectory();
-			if (root.canWrite()){
-				File gpxfile = new File(root, Util.LOG_FILE);
-				FileWriter gpxwriter = new FileWriter(gpxfile);
-				BufferedWriter out = new BufferedWriter(gpxwriter);
-				for(int i = 0; i < log.size(); i ++) {
-					out.write(log.get(i));
-					out.write("\n");
-				}
-				
-				out.close();
-			}
-			
-		}
-		catch (Exception e) {
-			Toast.makeText(drawIt.this, "Error creating log file", Toast.LENGTH_LONG).show();
-		}
-		
-	}
-	
-	/** Method used to get the current system date & time.
-	 *  Format the string in DD/MM/YYYY HH:MM:SS
-	 *  @return	Formatted date-time string
-	*/
-	public String getDayTime() {
-		Calendar cNow = Calendar.getInstance();
-		String date = "" + cNow.get(Calendar.DAY_OF_MONTH) + "/" + (cNow.get(Calendar.MONTH) + 1) + "/" + cNow.get(Calendar.YEAR);
-		String time = "" + cNow.get(Calendar.HOUR_OF_DAY) + ":" + cNow.get(Calendar.MINUTE) + ":" + cNow.get(Calendar.SECOND) + " h";
-		return date + "\t" + time;
-	}
 
 }

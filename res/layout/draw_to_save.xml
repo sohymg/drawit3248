@@ -8,8 +8,9 @@
 <com.drawIt.DrawSView android:layout_width="fill_parent" 
 	android:id="@+id/drawSView" 
 	android:layout_height="fill_parent" 
-	
-	android:layout_centerHorizontal="true">
+	android:layout_centerHorizontal="true"
+	lineColor="#2787fd"
+	bkgrdColor="#CCCCCC">
 </com.drawIt.DrawSView>
 
 <TextView android:id="@+id/TopMsg" 
@@ -27,7 +28,7 @@
 	android:layout_gravity="center_horizontal" 
 	android:textColor="@drawable/solid_black" 
 	android:layout_alignParentBottom="true"
-	android:text="Shake the phone if you do not wish to save." 
+	android:text="Press back if you do not wish to save." 
 	android:layout_centerHorizontal="true">
 </TextView>
 

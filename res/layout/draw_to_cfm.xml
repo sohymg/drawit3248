@@ -8,7 +8,9 @@
 <com.drawIt.DrawSView android:layout_width="fill_parent" 
 	android:id="@+id/drawSView" 
 	android:layout_height="fill_parent" 
-	android:layout_centerHorizontal="true">
+	android:layout_centerHorizontal="true"
+	lineColor="#ff7e00"
+	bkgrdColor="#CCCCCC">
 </com.drawIt.DrawSView>
 
 <TextView android:id="@+id/TopMsg" 
@@ -26,7 +28,7 @@
 	android:layout_gravity="center_horizontal" 
 	android:textColor="@drawable/solid_black" 
 	android:layout_alignParentBottom="true"
-	android:text="Shake the phone to restart." 
+	android:text="Press back to draw a new pass stroke" 
 	android:layout_centerHorizontal="true">
 </TextView>
 

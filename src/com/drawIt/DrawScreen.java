@@ -12,7 +12,6 @@
 
 package com.drawIt;
 
-import java.util.Calendar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,7 +22,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -209,6 +207,10 @@ public class DrawScreen extends Activity{
 		
 		switch(drawMode) {
 			case DRAW_TO_LOGIN:
+				Util.readLogFile();
+				String logStr = extras.getString("domain") + "\tlogin";
+				Util.log.add(logStr);
+				Util.writeLogFile();
 				if(DatabaseManager.getLogin(drawIt.context, extras.getString("domain"), passStroke) != null) { //if pass stroke exist
 					intent = new Intent();
 					intent.putExtra("domain", extras.getString("domain"));
@@ -230,6 +232,7 @@ public class DrawScreen extends Activity{
 						intent = new Intent(this, DrawScreen.class);
 						intent.putExtra("mode", DRAW_TO_CFM);
 						intent.putExtra("passStroke", passStroke);
+						intent.putExtra("domain", extras.getString("domain"));
 					
 						startActivityForResult(intent, DRAW_TO_CFM); //show redraw to confirm save screen
 					}
@@ -247,6 +250,13 @@ public class DrawScreen extends Activity{
 				/*Util.showMsg(this, "length: " + passStroke.length() 
 						+ " LD: " + Util.LevenshteinDistance(passStroke, passStrokeCfm)
 						+ " DTW: " + Util.DTWDistance(passStroke, passStrokeCfm));*/
+				Util.readLogFile();
+				logStr = extras.getString("domain") + "\tconfirmation";
+				logStr += "\n" + Util.getDayTime() + "\t";
+				logStr += String.valueOf(Util.DTWDistance(passStroke, passStrokeCfm));
+				logStr += "\t" + String.valueOf(passStroke.length());
+				Util.log.add(logStr);
+				Util.writeLogFile();
 				 //if redraw matches 1st draw, save is successful
 				if(Util.isValid(passStroke, passStrokeCfm) == true) {
 					setResult(RESULT_OK);

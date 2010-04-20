@@ -37,9 +37,13 @@ public class SelectDomain extends Activity implements OnItemClickListener{
 		setContentView(R.layout.ps_management_select_domain);
 		
 		domainlist=(ListView)findViewById(R.id.lvDomains);
-		// By using setAdpater method in listview we an add string array in list.
-		domainlist.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 , domains));
-		domainlist.setOnItemClickListener(this);
+		domains = DatabaseManager.getDomains(drawIt.context);
+		
+		if(domains != null) {
+			// By using setAdpater method in listview we an add string array in list.
+			domainlist.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 , domains));
+			domainlist.setOnItemClickListener(this);
+		}
 		
 		//inst = (TextView)findViewById(R.id.ps_mgt_instruction);
 	}

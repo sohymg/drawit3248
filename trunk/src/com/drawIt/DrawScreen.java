@@ -12,6 +12,8 @@
 
 package com.drawIt;
 
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -56,6 +58,7 @@ public class DrawScreen extends Activity{
 	  private float mAccel; // acceleration apart from gravity
 	  private float mAccelCurrent; // current acceleration including gravity
 	  private float mAccelLast; // last acceleration including gravity
+	  private static float ACCEL_THRESHOLD = 5;
 
 	  private final SensorEventListener mSensorListener = new SensorEventListener() {
 
@@ -68,7 +71,7 @@ public class DrawScreen extends Activity{
 		      float delta = mAccelCurrent - mAccelLast;
 		      mAccel = mAccel * 0.9f + delta; // perform low-cut filter
 		      
-		      if(mAccel > 2)
+		      if(mAccel > ACCEL_THRESHOLD);
 		    	  finish();
 		    }
 

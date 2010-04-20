@@ -46,10 +46,17 @@ public class DatabaseManager {
 				if(c.moveToNext() == false)
 					return null;
 			}
+			String formName = c.getString(2);
+			String userIDField = c.getString(3);
+			String userID = c.getString(1);
+			String passwordField = c.getString(4);
+			String password = c.getString(5);
+			c.close();
 			//string array will contain formName, userIDField, userID, passwordField, password
-			return new String[] {c.getString(2), c.getString(3), c.getString(1), c.getString(4), c.getString(5)};
+			return new String[] {formName,userIDField,userID,passwordField,password};
 		}
 		else {
+			c.close();
 			return null;
 		}
 	}
@@ -66,9 +73,13 @@ public class DatabaseManager {
 		dbAdapt.close();
 		
 		if(c.getCount() > 0) {
-			return new String[] {c.getString(0), c.getString(1)};
+			String useridField = c.getString(0);
+			String passwordField = c.getString(1);
+			c.close();
+			return new String[] {useridField, passwordField};
 		}
 		else {
+			c.close();
 			return null;
 		}
 	}
@@ -102,6 +113,7 @@ public class DatabaseManager {
 			domains[i] = mCursor.getString(0);
 			mCursor.moveToNext();
 		}
+		mCursor.close();
 		return domains;
 	}
 	//checks if a passStroke is too close to an existing one
@@ -125,12 +137,16 @@ public class DatabaseManager {
 				err = (double)Util.DTWDistance(passStroke, existing)/(double)existing.length();
 				//passStroke is too close to an existing one
 				if(err <= errThreshold)
+				{
+					c.close();
 					return false;
+				}
 			
 			}while (c.moveToNext()== true);
 			
 		}
 		//no match found
+		c.close();
 		return true;
 	}
 }

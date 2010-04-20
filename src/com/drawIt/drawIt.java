@@ -42,8 +42,10 @@ public class drawIt extends Activity{
 
 	private static final int MENU_ADDRESSBAR = 0;
 	private static final int MENU_PSMANAGEMENT = 1;
+	private static final String HOMEPAGE = "http://www.hotmail.com/";
 	
 	ArrayList<String> log = new ArrayList<String>();
+	private long startTime;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,9 +74,10 @@ public class drawIt extends Activity{
 		
 		webview.getSettings().setSavePassword(false); //disable webview default password saving
 		webview.getSettings().setJavaScriptEnabled(true);
+		webview.getSettings().setSaveFormData(false);
 		
 		webview.addJavascriptInterface(new JSCallback(this), "JSCALLBACK");
-		webview.loadUrl("http://www.hotmail.com/");
+		webview.loadUrl(HOMEPAGE);
 		
 		// Get a handle to all user interface elements
 		urlText = (EditText) findViewById(R.id.url_field);
@@ -88,6 +91,7 @@ public class drawIt extends Activity{
 				}
 		});
 		
+		//set listener for enter key
 		urlText.setOnKeyListener(new OnKeyListener() {
 			public boolean onKey(View view, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {

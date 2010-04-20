@@ -48,7 +48,6 @@ public class DrawSView extends SurfaceView implements SurfaceHolder.Callback {
             canvas = surfaceHolder.lockCanvas(null);
             canvas.drawColor(bkgrdColor);
             
-            
             canvas.drawLine(20, 20, canvas.getWidth() - 20, 20, new Paint());
             canvas.drawLine(20, 20, 20, canvas.getHeight() - 20, new Paint());
             canvas.drawLine(canvas.getWidth() - 20, 20, canvas.getWidth() - 20, canvas.getHeight() - 20, new Paint());
@@ -112,6 +111,11 @@ public class DrawSView extends SurfaceView implements SurfaceHolder.Callback {
 		try {
             canvas = surfaceHolder.lockCanvas(null);
             canvas.drawColor(bkgrdColor);
+            
+            canvas.drawLine(20, 20, canvas.getWidth() - 20, 20, new Paint());
+            canvas.drawLine(20, 20, 20, canvas.getHeight() - 20, new Paint());
+            canvas.drawLine(canvas.getWidth() - 20, 20, canvas.getWidth() - 20, canvas.getHeight() - 20, new Paint());
+            canvas.drawLine(20, canvas.getHeight() - 20, canvas.getWidth() - 20, canvas.getHeight() - 20, new Paint());
         } finally {
             if (canvas != null) {
                 surfaceHolder.unlockCanvasAndPost(canvas);
@@ -122,6 +126,11 @@ public class DrawSView extends SurfaceView implements SurfaceHolder.Callback {
         try {
             canvas = surfaceHolder.lockCanvas(null);
             canvas.drawColor(bkgrdColor);
+            
+            canvas.drawLine(20, 20, canvas.getWidth() - 20, 20, new Paint());
+            canvas.drawLine(20, 20, 20, canvas.getHeight() - 20, new Paint());
+            canvas.drawLine(canvas.getWidth() - 20, 20, canvas.getWidth() - 20, canvas.getHeight() - 20, new Paint());
+            canvas.drawLine(20, canvas.getHeight() - 20, canvas.getWidth() - 20, canvas.getHeight() - 20, new Paint());
         } finally {
             if (canvas != null) {
                 surfaceHolder.unlockCanvasAndPost(canvas);

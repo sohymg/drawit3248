@@ -68,7 +68,8 @@ public class drawIt extends Activity{
 		        return false;  
 		    }; 
 		    
-		    public void onProgressChanged(WebView view, int progress) {System.out.println(progress);
+		    public void onProgressChanged(WebView view, int progress) {
+		    	//System.out.println(progress);
 		        activity.setProgress(progress * 1000);
 		      }
 		});
@@ -220,7 +221,7 @@ public class drawIt extends Activity{
 		String passStroke = extras.getString("passStroke");
 		
 		//debug printout
-		Util.pl(domain + " " + formName + " " + useridField + " " + userid + " " + passwdField + " " + passwd + " " + passStroke);
+		//Util.pl(domain + " " + formName + " " + useridField + " " + userid + " " + passwdField + " " + passwd + " " + passStroke);
 		DatabaseManager.addPassStroke(context,domain, formName, useridField, userid, passwdField, passwd, passStroke);
 	}	
 	
@@ -239,7 +240,7 @@ public class drawIt extends Activity{
 		//called when the user manually logins for the first to a domain
 		//show the draw pass stroke interface which will save the pass stroke
 		
-		Util.pl(formName + " " + useridField + " " + userid + " " + passwdField + " " + passwd);
+		//Util.pl(formName + " " + useridField + " " + userid + " " + passwdField + " " + passwd);
 		
 		if(DatabaseManager.hasPassStroke(context, domain, userid, passwd) == false) {
 			Intent intent = new Intent(this, DrawScreen.class);

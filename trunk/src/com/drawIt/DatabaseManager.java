@@ -76,7 +76,7 @@ public class DatabaseManager {
 			return null;
 		}
 	}
-	
+
 	public static String[] hasPassStroke(Context ctx, String domain) {
 		
 		//get the userid and passwd field names

@@ -200,4 +200,19 @@ public class DatabaseManager {
 		
 		Toast.makeText(ctx,"Password changed",Toast.LENGTH_LONG).show();
 	}
+	
+	//deletes a row when given the userID and domain
+	public static void deletePassword(Context ctx, String domain, String userID) {
+		DBAdapter dbAdapt = new DBAdapter(ctx);
+		dbAdapt.open();
+		
+		if(dbAdapt.deletePassStroke(domain, userID) == true) {
+			Toast.makeText(ctx,"Entry deleted",Toast.LENGTH_LONG).show();
+		}
+		//the else clause should never be encountered
+		else {
+			Toast.makeText(ctx,"Error in deleting passStroke",Toast.LENGTH_LONG).show();
+		}
+		dbAdapt.close();
+	}
 }

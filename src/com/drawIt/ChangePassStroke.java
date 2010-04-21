@@ -16,11 +16,14 @@ public class ChangePassStroke extends Activity implements OnClickListener {
 	private TextView tvDomain;
 	private TextView tvUsername;
 	private EditText etPassword;
+	private String entPwd;
 	private Button btnBack;
 	private Button btnNext;
+	
 	private String domain;
 	private String username;
 	private String password;
+	private String passStroke;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -33,6 +36,8 @@ public class ChangePassStroke extends Activity implements OnClickListener {
 		Bundle extras = this.getIntent().getExtras();
 		domain = extras.getString("domain");
 		username = extras.getString("username");
+		password = extras.getString("password");
+		passStroke = extras.getString("passStroke");
 		
 		tvDomain = (TextView)findViewById(R.id.tvDomain);
 		tvDomain.setText(domain);
@@ -40,6 +45,7 @@ public class ChangePassStroke extends Activity implements OnClickListener {
 		tvUsername.setText(username);
 		
 		etPassword = (EditText)findViewById(R.id.password);
+		etPassword.setText("");
 		
 		btnBack = (Button)findViewById(R.id.btnBack);
 		btnBack.setOnClickListener(this);
@@ -52,12 +58,16 @@ public class ChangePassStroke extends Activity implements OnClickListener {
 		Intent intent = null;
 		if (v == btnNext) {
 			try{
-				
-			password = etPassword.getText().toString();
-			//check if password exists in database
-			//if exists, go to drawscreen.draw_to_save
-			
-			//else, display message
+				entPwd = etPassword.getText().toString();
+				if(entPwd.equals(password))
+				{
+					//go to draw screen
+				}
+				else
+				{
+					etPassword.setText("");
+					Toast.makeText(this, "Password is incorrect.", Toast.LENGTH_SHORT).show();
+				}
 			}
 			catch(Exception e) {
 				Toast.makeText(this, "Error: " + e.toString(), Toast.LENGTH_LONG).show();
@@ -68,6 +78,8 @@ public class ChangePassStroke extends Activity implements OnClickListener {
 			intent = new Intent(v.getContext(), SelectOption.class);
 			intent.putExtra("domain", domain);
 			intent.putExtra("username", username);
+			intent.putExtra("password", password);
+			intent.putExtra("passStroke", passStroke);
 			startActivityForResult(intent, 0);
 		}
 	}

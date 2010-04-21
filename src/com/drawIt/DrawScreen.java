@@ -122,8 +122,10 @@ public class DrawScreen extends Activity{
 				
 				break;
 			case DRAW_TO_PM_SAVE:
+				setContentView(R.layout.draw_to_save);
 				break;
 			case DRAW_TO_PM_CFM:
+				passStroke = extras.getString("passStroke");
 				break;
 		}
 	
@@ -268,8 +270,38 @@ public class DrawScreen extends Activity{
 				}
 				break;
 			case DRAW_TO_PM_SAVE:
+				if(passStroke.length() >= MIN_PS_LENGTH) { //if pass stroke is of min. length
+					//now check if passStroke is unique
+					if(DatabaseManager.isUnique(drawIt.context, extras.getString("domain"), passStroke)) {
+					
+						intent = new Intent(this, DrawScreen.class);
+						intent.putExtra("mode", DRAW_TO_PM_CFM);
+						intent.putExtra("passStroke", passStroke);
+						intent.putExtra("domain", extras.getString("domain"));
+						
+					
+						startActivityForResult(intent, DRAW_TO_PM_CFM); //show redraw to confirm save screen
+					}
+					else {
+						Util.showMsg(this, "Uniqueness still Rulezz, try again!");
+						//password is not unique
+					}
+				}
+				else {
+					Util.showMsg(this, "Please draw a longer pass stroke");
+					Util.vibrate(150);
+				}
 				break;
 			case DRAW_TO_PM_CFM:
+				 //if redraw matches 1st draw, save is successful
+				if(Util.isValid(passStroke, passStrokeCfm) == true) {
+					setResult(RESULT_OK);
+					finish(); //return to draw_to_save
+				}
+				else {
+					Util.showMsg(this, "Your Pass-Strokes do not match.\nPlease try again.");
+					Util.vibrate(200);
+				}
 				break;
 		}
 	}
@@ -289,6 +321,13 @@ public class DrawScreen extends Activity{
 			finish(); //return to drawit
 		}
 		else if(requestCode == DRAW_TO_PM_CFM && resultCode == RESULT_OK) {
+			Intent intent = new Intent();
+			intent.putExtra("domain", extras.getString("domain"));
+			intent.putExtra("userid", extras.getString("userid"));
+			intent.putExtra("passStoke", passStroke);
+			
+			setResult(RESULT_OK,intent);
+			finish();		//return to changePassStroke
 			
 		}
 	}

@@ -231,7 +231,7 @@ public class drawIt extends Activity{
 		
 		//Util.pl(formName + " " + useridField + " " + userid + " " + passwdField + " " + passwd);
 		
-		if(DatabaseManager.hasPassStroke(context, domain, userid, passwd) == false) {
+		if(DatabaseManager.hasPassStroke(context, domain, userid) == false) {
 			Intent intent = new Intent(this, DrawScreen.class);
 	    	intent.putExtra("mode", DrawScreen.DRAW_TO_SAVE);
 	    	intent.putExtra("domain", domain);

@@ -161,13 +161,12 @@ public class DBAdapter
     }
     
   //---checks if a given domain, userID and password have been saved---
-    public boolean checkExist(String domain, String userID, String password) throws SQLException 
+    public boolean checkExist(String domain, String userID) throws SQLException 
     {
         Cursor mCursor =
                 db.query(true, DATABASE_TABLE, null,
                 		KEY_DOMAIN + "='" + domain + "' AND "
-                		+ KEY_USERID + "='" + userID + "' AND "
-                		+ KEY_PASSWORD + "='" + password + "'", 
+                		+ KEY_USERID + "='" + userID + "'", 
                 		null,
                 		null, 
                 		null, 

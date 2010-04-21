@@ -71,6 +71,7 @@ public class ChangePassword extends Activity implements OnClickListener {
 					etCurrPwd.setText("");
 					etNewPwd.setText("");
 					etRetypedPwd.setText("");
+					finish();
 				}
 				else {
 					Toast.makeText(this,"New and retyped passwords do not match",Toast.LENGTH_LONG).show();

@@ -180,6 +180,24 @@ public class DBAdapter
         else
         	return false;
     }
+    
+  //---gets all fields for a given userID and domain combination (primary key)
+    public Cursor getRow(String domain, String userID) throws SQLException 
+    {
+        Cursor mCursor =
+                db.query(true, DATABASE_TABLE, null,
+                		KEY_DOMAIN + "='" + domain + "' AND "
+                		+ KEY_USERID + "='" + userID + "'", 
+                		null,
+                		null, 
+                		null, 
+                		null, 
+                		null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
 
     //---updates a passStroke---
     public boolean updatePassStroke(String domain, String userID, 

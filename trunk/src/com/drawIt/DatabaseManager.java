@@ -165,4 +165,39 @@ public class DatabaseManager {
 		c.close();
 		return true;
 	}
+	
+	//checks if password is correct for a given domain and userID
+	public static boolean isLoginCorrect(Context ctx, String domain, String userID, String password) {
+		DBAdapter dbAdapt = new DBAdapter(ctx);
+		dbAdapt.open();
+		//get the one domain/userID combination
+		Cursor c = dbAdapt.getRow(domain, userID);
+		dbAdapt.close();
+		
+		//column index 5 is the password field
+		String storedPassword = c.getString(5);
+		c.close();
+		//compare the stored password with the one passed in and return true if they match
+		if(storedPassword.compareTo(password) == 0)
+			return true;
+		else
+			return false;
+	}
+	
+	//updates password
+	public static void updatePassword(Context ctx, String domain, String userID, String password) {
+		DBAdapter dbAdapt = new DBAdapter(ctx);
+		dbAdapt.open();
+		//get the one domain/userID combination
+		Cursor c = dbAdapt.getRow(domain, userID);
+		
+		//column index 6 holds the passStroke
+		String storedPassStroke = c.getString(6);
+		c.close();
+		
+		dbAdapt.updatePassStroke(domain, userID, password, storedPassStroke);
+		dbAdapt.close();
+		
+		Toast.makeText(ctx,"Password changed",Toast.LENGTH_LONG).show();
+	}
 }

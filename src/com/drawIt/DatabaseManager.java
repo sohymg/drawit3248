@@ -194,7 +194,7 @@ public class DatabaseManager {
 		//column index 6 holds the passStroke
 		String storedPassStroke = c.getString(6);
 		c.close();
-		
+	//	Util.pl("update password: " + domain + " " + userID+" "+password+" "+storedPassStroke);
 		dbAdapt.updatePassStroke(domain, userID, password, storedPassStroke);
 		dbAdapt.close();
 		
@@ -211,7 +211,7 @@ public class DatabaseManager {
 		//column index 5 holds the password
 		String storedPassword = c.getString(5);
 		c.close();
-		
+	//	Util.pl("update passStroke: " + domain + " " + userID+" "+storedPassword+" "+passStroke);
 		dbAdapt.updatePassStroke(domain, userID, storedPassword, passStroke);
 		dbAdapt.close();
 		

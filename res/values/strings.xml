@@ -3,4 +3,9 @@
     <string name="hello">Hello World, drawIt!</string>
     <string name="app_name">drawIt</string>
     <string name="go_button">Go</string>
+    <string name="drawSave">Draw a PassStroke to save this password</string>
+    <string name="drawLogin">Draw your PassStroke to login</string>
+    <string name="drawCfm">Redraw PassStroke to confirm</string>
+    <string name="drawPMSave">Draw your new PassStroke now</string>
+    <string name="drawPMCfm">Redraw your PassStroke to confirm</string>
 </resources>

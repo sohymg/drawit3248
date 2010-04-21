@@ -20,7 +20,7 @@ public class SelectOption extends Activity implements OnItemClickListener{
 	private String options[]={
 			"Change Password",
 			"Change PassStroke",
-			"Delete PassStroke"
+			"Delete this entry"
 	};
 	
 	private String domain;
@@ -68,7 +68,7 @@ public class SelectOption extends Activity implements OnItemClickListener{
 				intent.putExtra("username", username);
 				startActivity(intent);
 				break;
-			case 2: //"Delete PassStroke"
+			case 2: //"Delete entry"
 				DatabaseManager.deleteRow(drawIt.context, domain, username);
 				finish();
 				break;

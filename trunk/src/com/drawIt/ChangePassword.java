@@ -67,6 +67,7 @@ public class ChangePassword extends Activity implements OnClickListener {
 				//now check if the new and confirmed passwords are equal
 				if(newPwd.compareTo(retypedPwd) == 0) {
 					DatabaseManager.updatePassword(drawIt.context, domain, username, newPwd);
+					//clears the textboxes so there's some visual feedback that something has happened
 					etCurrPwd.setText("");
 					etNewPwd.setText("");
 					etRetypedPwd.setText("");

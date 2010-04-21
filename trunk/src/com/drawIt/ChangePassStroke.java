@@ -17,13 +17,13 @@ public class ChangePassStroke extends Activity implements OnClickListener {
 	private TextView tvUsername;
 	private EditText etPassword;
 	private String entPwd;
-	private Button btnBack;
+	//private Button btnBack;
 	private Button btnNext;
 	
 	private String domain;
 	private String username;
-	private String password;
-	private String passStroke;
+//	private String password;
+//	private String passStroke;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -36,8 +36,8 @@ public class ChangePassStroke extends Activity implements OnClickListener {
 		Bundle extras = this.getIntent().getExtras();
 		domain = extras.getString("domain");
 		username = extras.getString("username");
-		password = extras.getString("password");
-		passStroke = extras.getString("passStroke");
+	//	password = extras.getString("password");
+	//	passStroke = extras.getString("passStroke");
 		
 		tvDomain = (TextView)findViewById(R.id.tvDomain);
 		tvDomain.setText(domain);
@@ -47,33 +47,30 @@ public class ChangePassStroke extends Activity implements OnClickListener {
 		etPassword = (EditText)findViewById(R.id.password);
 		etPassword.setText("");
 		
-		btnBack = (Button)findViewById(R.id.btnBack);
-		btnBack.setOnClickListener(this);
+	//	btnBack = (Button)findViewById(R.id.btnBack);
+	//	btnBack.setOnClickListener(this);
 		btnNext = (Button)findViewById(R.id.btnNext);
 		btnNext.setOnClickListener(this);
 	}
 
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		Intent intent = null;
 		if (v == btnNext) {
-			try{
 				entPwd = etPassword.getText().toString();
-				if(entPwd.equals(password))
+				if(DatabaseManager.isLoginCorrect(drawIt.context, domain, username, entPwd) == true)
 				{
-					//go to draw screen
+					Intent intent = new Intent(this, DrawScreen.class);
+			    	intent.putExtra("mode", DrawScreen.DRAW_TO_SAVE);
+			    	intent.putExtra("domain", domain);
+					startActivityForResult(intent, DrawScreen.DRAW_TO_PM_SAVE);
 				}
 				else
 				{
 					etPassword.setText("");
 					Toast.makeText(this, "Password is incorrect.", Toast.LENGTH_SHORT).show();
 				}
-			}
-			catch(Exception e) {
-				Toast.makeText(this, "Error: " + e.toString(), Toast.LENGTH_LONG).show();
-			}
 		}
-		if(v == btnBack)
+		/*if(v == btnBack)
 		{
 			intent = new Intent(v.getContext(), SelectOption.class);
 			intent.putExtra("domain", domain);
@@ -81,6 +78,17 @@ public class ChangePassStroke extends Activity implements OnClickListener {
 			intent.putExtra("password", password);
 			intent.putExtra("passStroke", passStroke);
 			startActivityForResult(intent, 0);
+		}*/
+	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		if(requestCode == DrawScreen.DRAW_TO_PM_SAVE && resultCode == RESULT_OK) {
+			//update database
+			Bundle extras = data.getExtras();
+			String passStroke = extras.getString("passStroke");
+			
+			DatabaseManager.updatePassStroke(drawIt.context, domain, username, passStroke);
+			
 		}
 	}
 }

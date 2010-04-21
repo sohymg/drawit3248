@@ -66,11 +66,10 @@ public class SelectOption extends Activity implements OnItemClickListener{
 				intent = new Intent(this, ChangePassStroke.class);
 				intent.putExtra("domain", domain);
 				intent.putExtra("username", username);
-				
 				startActivity(intent);
 				break;
 			case 2: //"Delete PassStroke"
-				DatabaseManager.deletePassword(drawIt.context, domain, username);
+				DatabaseManager.deleteRow(drawIt.context, domain, username);
 				finish();
 				break;
 			}

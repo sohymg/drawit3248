@@ -201,8 +201,25 @@ public class DatabaseManager {
 		Toast.makeText(ctx,"Password changed",Toast.LENGTH_LONG).show();
 	}
 	
-	//deletes a row when given the userID and domain
-	public static void deletePassword(Context ctx, String domain, String userID) {
+	//updates passStroke
+	public static void updatePassStroke(Context ctx, String domain, String userID, String passStroke) {
+		DBAdapter dbAdapt = new DBAdapter(ctx);
+		dbAdapt.open();
+		//get the one domain/userID combination
+		Cursor c = dbAdapt.getRow(domain, userID);
+		
+		//column index 5 holds the password
+		String storedPassword = c.getString(5);
+		c.close();
+		
+		dbAdapt.updatePassStroke(domain, userID, storedPassword, passStroke);
+		dbAdapt.close();
+		
+		Toast.makeText(ctx, "PassStroke changed", Toast.LENGTH_LONG).show();
+	}
+	
+	//deletes a database row when given the userID and domain
+	public static void deleteRow(Context ctx, String domain, String userID) {
 		DBAdapter dbAdapt = new DBAdapter(ctx);
 		dbAdapt.open();
 		

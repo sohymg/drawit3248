@@ -40,18 +40,18 @@
 	android:password = "true" >
 	</EditText>
 
-<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="50px" android:layout_marginRight="50px" android:layout_marginBottom="10px" android:layout_marginTop="10px" android:id="@+id/buttons">
-<Button android:layout_width="100px" 
+<TableRow android:layout_width="fill_parent" android:gravity="right" android:layout_height="wrap_content" android:layout_marginLeft="50px" android:layout_marginRight="20px" android:layout_marginBottom="10px" android:layout_marginTop="10px" android:id="@+id/buttons">
+<!-- Button android:layout_width="100px" 
 		android:layout_height="50px" 
 		android:id="@+id/btnBack" 
 		android:text="BACK" 
 		android:layout_marginLeft="0px" 
 		android:layout_marginRight="0px">
-		</Button>
+		</Button-->
 <Button android:layout_width="100px" 
 	    android:layout_height="50px" 
 	    android:id="@+id/btnNext" 
-	    android:text="NEXT" 
+	    android:text="Next" 
 	    android:layout_marginLeft="0px" 
 	    android:layout_marginRight="0px">
 	    </Button>

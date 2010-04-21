@@ -15,7 +15,7 @@ public class EnterUsername extends Activity implements OnClickListener {
 
 	private TextView tvDomain;
 	private EditText etUsername;
-	private Button btnBack;
+//	private Button btnBack;
 	private Button btnNext;
 	private String domain;
 	private String username;
@@ -35,8 +35,8 @@ public class EnterUsername extends Activity implements OnClickListener {
 		tvDomain.setText(domain);
 		
 		etUsername = (EditText)findViewById(R.id.tvUsername);
-		btnBack = (Button)findViewById(R.id.btnBack);
-		btnBack.setOnClickListener(this);
+//		btnBack = (Button)findViewById(R.id.btnBack);
+//		btnBack.setOnClickListener(this);
 		btnNext = (Button)findViewById(R.id.btnNext);
 		btnNext.setOnClickListener(this);
 		
@@ -51,20 +51,23 @@ public class EnterUsername extends Activity implements OnClickListener {
 			username = etUsername.getText().toString();
 			//check if username exist in database
 			//if exists, go to SelectOption
-			intent = new Intent(v.getContext(), SelectOption.class);
-			intent.putExtra("domain", domain);
-			intent.putExtra("username",username);
-			startActivity(intent);
-			//else, display message
+			if(DatabaseManager.hasPassStroke(drawIt.context, domain, username)== true) {
+				intent = new Intent(v.getContext(), SelectOption.class);
+				intent.putExtra("domain", domain);
+				intent.putExtra("username",username);
+				startActivity(intent);
+			}
+			else
+				throw new Exception();
 			}
 			catch(Exception e) {
-				Toast.makeText(this, "Error finding "+ username + e.toString(), Toast.LENGTH_LONG).show();
+				Toast.makeText(this, username + " not found in the database", Toast.LENGTH_LONG).show();
 			}
 		}
-		if(v == btnBack)
+		/*if(v == btnBack)
 		{
 			intent = new Intent(v.getContext(), SelectDomain.class);
 			startActivity(intent);
-		}
+		}*/
 	}
 }

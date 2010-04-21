@@ -100,12 +100,12 @@ public class DatabaseManager {
 		}
 	}
 	
-	public static boolean hasPassStroke(Context ctx, String domain, String userid, String passwd) {
+	public static boolean hasPassStroke(Context ctx, String domain, String userid) {
 		
 		//used by drawit to check if this set of password has already been saved. if saved, don prompt to save again
 		DBAdapter dbAdapt = new DBAdapter(ctx);
 		dbAdapt.open();
-		boolean exists = dbAdapt.checkExist(domain,userid,passwd);
+		boolean exists = dbAdapt.checkExist(domain,userid);
 		dbAdapt.close();
 		
 		if(exists)

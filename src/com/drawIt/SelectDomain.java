@@ -18,8 +18,7 @@ public class SelectDomain extends Activity implements OnItemClickListener{
 	private ListView lvDomains;
 	private String[]  domains;
 	
-	private static final int MENU_BACK = 0;
-	private static final int MENU_CLEARDB = 1;
+	private static final int MENU_CLEARDB = 0;
 	
 	
 	@Override
@@ -72,7 +71,6 @@ public class SelectDomain extends Activity implements OnItemClickListener{
 	/* Creates the menu items */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    menu.add(0, MENU_BACK, 0, "Go back to webpage");
 	    menu.add(0, MENU_CLEARDB, 0, "Clear All PassStrokes");
 	    return true;
 	}
@@ -82,10 +80,6 @@ public class SelectDomain extends Activity implements OnItemClickListener{
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
-	    	case MENU_BACK:
-	    		Intent intent = new Intent(this, drawIt.class);
-	    		startActivity(intent);
-	    		return true;
 	    	//deletes all passStrokes from the database
 	    	case MENU_CLEARDB:
 	    		deleteAllPassStrokes(this);

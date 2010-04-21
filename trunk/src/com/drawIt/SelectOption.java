@@ -70,8 +70,8 @@ public class SelectOption extends Activity implements OnItemClickListener{
 				startActivity(intent);
 				break;
 			case 2: //"Delete PassStroke"
-				//call a function in DatabaseManager to delete the passStroke and show
-				//a toast message
+				DatabaseManager.deletePassword(drawIt.context, domain, username);
+				finish();
 				break;
 			}
 		}

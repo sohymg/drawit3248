@@ -60,7 +60,7 @@ public class ChangePassStroke extends Activity implements OnClickListener {
 				if(DatabaseManager.isLoginCorrect(drawIt.context, domain, username, entPwd) == true)
 				{
 					Intent intent = new Intent(this, DrawScreen.class);
-			    	intent.putExtra("mode", DrawScreen.DRAW_TO_SAVE);
+			    	intent.putExtra("mode", DrawScreen.DRAW_TO_PM_SAVE);
 			    	intent.putExtra("domain", domain);
 					startActivityForResult(intent, DrawScreen.DRAW_TO_PM_SAVE);
 				}
@@ -86,6 +86,7 @@ public class ChangePassStroke extends Activity implements OnClickListener {
 			//update database
 			Bundle extras = data.getExtras();
 			String passStroke = extras.getString("passStroke");
+			etPassword.setText("");
 			
 			DatabaseManager.updatePassStroke(drawIt.context, domain, username, passStroke);
 			

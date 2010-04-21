@@ -19,7 +19,7 @@
 	android:layout_gravity="center_horizontal" 
 	android:layout_centerHorizontal="true"
 	android:textColor="@drawable/solid_black" 
-	android:text="Re-draw Pass-Stroke to confirm.">
+	android:text="@string/drawCfm">
 </TextView>
 
 <TextView android:id="@+id/BtmMsg"  

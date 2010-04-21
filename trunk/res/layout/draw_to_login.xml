@@ -19,7 +19,7 @@
 	android:layout_gravity="center_horizontal" 
 	android:layout_centerHorizontal="true"
 	android:textColor="@drawable/solid_black" 
-	android:text="Draw your Pass Stroke to login.">
+	android:text="@string/drawLogin">
 </TextView>
 
 <TextView android:id="@+id/BtmMsg"  

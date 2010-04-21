@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class DrawScreen extends Activity{
@@ -119,13 +120,17 @@ public class DrawScreen extends Activity{
 			case DRAW_TO_CFM:
 				passStroke = extras.getString("passStroke");
 				setContentView(R.layout.draw_to_cfm);
-				
 				break;
 			case DRAW_TO_PM_SAVE:
 				setContentView(R.layout.draw_to_save);
+				TextView instructions = (TextView)findViewById(R.id.TopMsg);
+				instructions.setText(R.string.drawPMSave);
 				break;
 			case DRAW_TO_PM_CFM:
 				passStroke = extras.getString("passStroke");
+				setContentView(R.layout.draw_to_cfm);
+				instructions = (TextView)findViewById(R.id.TopMsg);
+				instructions.setText(R.string.drawPMCfm);
 				break;
 		}
 	
@@ -324,7 +329,7 @@ public class DrawScreen extends Activity{
 			Intent intent = new Intent();
 			intent.putExtra("domain", extras.getString("domain"));
 			intent.putExtra("userid", extras.getString("userid"));
-			intent.putExtra("passStoke", passStroke);
+			intent.putExtra("passStroke", passStroke);
 			
 			setResult(RESULT_OK,intent);
 			finish();		//return to changePassStroke

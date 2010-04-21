@@ -19,7 +19,7 @@
 	android:layout_gravity="center_horizontal" 
 	android:layout_centerHorizontal="true"
 	android:textColor="@drawable/solid_black" 
-	android:text="Draw a Pass-Stroke to save this password.">
+	android:text="@string/drawSave">
 </TextView>
 
 <TextView android:id="@+id/BtmMsg"  

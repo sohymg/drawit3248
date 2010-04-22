@@ -299,11 +299,11 @@ public class DrawScreen extends Activity{
 					}
 					else {
 						//password is not unique
-						Util.showMsg(this, "Uniqueness still Rulezz, try again!");
+						Util.showMsg(this, "Oops, please choose a different passStroke");
 					}
 				}
 				else {
-					Util.showMsg(this, "Please draw a longer pass stroke");
+					Util.showMsg(this, "Please draw a longer passStroke");
 					Util.vibrate(150);
 				}
 				break;

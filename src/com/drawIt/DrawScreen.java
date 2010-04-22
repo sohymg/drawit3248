@@ -22,6 +22,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,6 +37,7 @@ public class DrawScreen extends Activity{
 	public static final int DRAW_TO_PM_SAVE 	= 3; //used for password management
 	public static final int DRAW_TO_PM_CFM 		= 4; //used for password management
 	int drawMode;
+	public int tries = 0;
 	
 	static int MIN_PS_LENGTH = 50; //the minimum length of pass stroke in segments
 	
@@ -227,8 +229,16 @@ public class DrawScreen extends Activity{
 					finish(); //return to drawit
 				}
 				else {
-					Util.showMsg(this, "Pass Stroke not recognized. Please try again");
 					Util.vibrate(200);
+					tries++;
+					if(tries > 2) {
+						Toast msg = Toast.makeText(this,"PassStroke not recognized, consider using manual entry",Toast.LENGTH_LONG);
+						msg.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+						msg.show();
+						finish();
+					}
+					else
+						Util.showMsg(this, "PassStroke not recognized. Please try again");
 				}
 				break;
 			case DRAW_TO_SAVE:
@@ -288,8 +298,8 @@ public class DrawScreen extends Activity{
 						startActivityForResult(intent, DRAW_TO_PM_CFM); //show redraw to confirm save screen
 					}
 					else {
-						Util.showMsg(this, "Uniqueness still Rulezz, try again!");
 						//password is not unique
+						Util.showMsg(this, "Uniqueness still Rulezz, try again!");
 					}
 				}
 				else {

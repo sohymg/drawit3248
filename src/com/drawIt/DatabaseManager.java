@@ -1,7 +1,3 @@
-/* 
- * this is a dummy class that should interface with the real database class.
- * all the fields should be stored in the database instead of as variables.
- */
 
 package com.drawIt;
 

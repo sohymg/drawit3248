@@ -21,7 +21,7 @@ public class JSWebViewClient extends WebViewClient {
 		drawIt.activity.setTitle(url);
 		String domain = url.substring(url.indexOf(':') + 3);
 		domain = domain.substring(0, domain.indexOf('/'));
-	//	Util.pl(domain);
+		//Util.pl(domain);
 
 		String[] fields = DatabaseManager.hasPassStroke(drawIt.context,domain);
 
@@ -50,13 +50,7 @@ public class JSWebViewClient extends WebViewClient {
 			}
 		}
 		
-		//inject code to detect form submit
-		
-		//this line is just for convenience purpose. if not u have to keep typing the login details to test
-		//to be removed when code is ready
-		//webview.loadUrl("javascript:document.getElementsByName('Email')[0].value = 'cs3248.g4@gmail.com'; document.getElementsByName('Passwd')[0].value = 'ilovecs3248';");
-		//end
-		
+		//inject code to detect form submit		
 		
 		try {
 			String captureJS = "";

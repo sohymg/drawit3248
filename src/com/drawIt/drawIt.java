@@ -103,21 +103,6 @@ public class drawIt extends Activity{
 				return false;
 			}
 		});
-
-
-		//System.out.println("Lev dist: " + Util.LevenshteinDistance("saturday", "sunday"));
-		//Util.showMsg(this,Util.LevenshteinDistance("1234", "4321") +  " " + Util.DTWDistance("1234", "4321"));
-		
-		/*Intent intent = new Intent(this, DrawScreen.class);
-    	intent.putExtra("mode", DrawScreen.DRAW_TO_SAVE);
-    	intent.putExtra("domain", "d");
-    	intent.putExtra("formName", "formName");
-    	intent.putExtra("useridField", "useridField");
-    	intent.putExtra("userid", "userid");
-    	intent.putExtra("passwdField", "passwdField");
-    	intent.putExtra("passwd", "passwd");
-		
-		startActivityForResult(intent, DrawScreen.DRAW_TO_SAVE);*/
 	}
 	
 	/** Open a browser on the URL specified in the text box */
